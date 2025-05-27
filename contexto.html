@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COGWAR REPORT - Karen Palacio</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #222;
+            --border-color: #a2a9b1;
+            --link-color: #0645ad;
+            --link-visited: #0b0080;
+            --link-hover: #06c;
+            --box-bg: #f8f9fa;
+            --box-border: #eaecf0;
+            --header-bg: #f6f6f6;
+            --header-border: #c8ccd1;
+            --nav-bg: #f6f6f6;
+            --nav-border: #c8ccd1;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #e6e6e6;
+            --border-color: #444;
+            --link-color: #6bb6ff;
+            --link-visited: #9b59b6;
+            --link-hover: #82caff;
+            --box-bg: #2a2a2a;
+            --box-border: #404040;
+            --header-bg: #2d2d2d;
+            --header-border: #444;
+            --nav-bg: #2d2d2d;
+            --nav-border: #444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Lato, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            font-size: 14px;
+        }
+
+        /* Header */
+        .header {
+            background-color: var(--header-bg);
+            border-bottom: 1px solid var(--header-border);
+            padding: 8px 0;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .home-link {
+            color: var(--link-color);
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .lang-selector, .theme-toggle {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 4px 8px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .lang-selector:hover, .theme-toggle:hover {
+            background-color: var(--box-bg);
+        }
+
+        /* Navigation */
+        .nav-container {
+            background-color: var(--nav-bg);
+            border-bottom: 1px solid var(--nav-border);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .nav-title {
+            font-size: 24px;
+            font-weight: normal;
+            padding: 15px 0;
+            margin: 0;
+            border-bottom: 3px solid var(--link-color);
+            display: inline-block;
+        }
+
+        /* Main content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 15px;
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 20px;
+        }
+
+        /* Sidebar TOC */
+        .toc {
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+            background-color: var(--box-bg);
+            border: 1px solid var(--box-border);
+            padding: 15px;
+            border-radius: 2px;
+        }
+
+        .toc h3 {
+            font-size: 13px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin-bottom: 5px;
+        }
+
+        .toc a {
+            color: var(--link-color);
+            text-decoration: none;
+            font-size: 12px;
+            display: block;
+            padding: 2px 0;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        .toc .toc-level-2 {
+            padding-left: 15px;
+        }
+
+        .toc .toc-level-3 {
+            padding-left: 30px;
+        }
+
+        /* Main content */
+        .content {
+            background-color: var(--bg-color);
+        }
+
+        .content h1 {
+            font-size: 32px;
+            font-weight: normal;
+            margin-bottom: 5px;
+            border-bottom: 3px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        .content h2 {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 30px 0 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 3px;
+        }
+
+        .content h3 {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 25px 0 10px 0;
+        }
+
+        .content h4 {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 20px 0 8px 0;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        .content a:visited {
+            color: var(--link-visited);
+        }
+
+        .content a:hover {
+            color: var(--link-hover);
+            text-decoration: underline;
+        }
+
+        /* Info box */
+        .info-box {
+            background-color: var(--box-bg);
+            border: 1px solid var(--box-border);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 2px;
+        }
+
+        .info-box h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        /* Quote blocks */
+        blockquote {
+            border-left: 4px solid var(--border-color);
+            padding-left: 15px;
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        /* Code blocks */
+        pre {
+            background-color: var(--box-bg);
+            border: 1px solid var(--box-border);
+            padding: 15px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-radius: 2px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        code {
+            background-color: var(--box-bg);
+            padding: 2px 4px;
+            border-radius: 2px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 12px;
+        }
+
+        /* Metadata */
+        .metadata {
+            background-color: var(--box-bg);
+            border: 1px solid var(--box-border);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 2px;
+            font-size: 13px;
+        }
+
+        .metadata p {
+            margin-bottom: 5px;
+        }
+
+        /* Author info */
+        .author-info {
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            margin-top: 40px;
+            font-size: 13px;
+        }
+
+        /* Hidden content for language switching */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 15px 10px;
+            }
+
+            .toc {
+                position: relative;
+                top: auto;
+                order: -1;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .nav-title {
+                font-size: 20px;
+            }
+
+            .content h1 {
+                font-size: 24px;
+            }
+
+            .content h2 {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 13px;
+            }
+
+            .container {
+                padding: 10px 8px;
+            }
+
+            .content h1 {
+                font-size: 20px;
+            }
+
+            .content h2 {
+                font-size: 16px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .header, .nav-container, .toc {
+                display: none;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+                max-width: none;
+            }
+
+            body {
+                color: #000;
+                background: #fff;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <header class="header">
+        <div class="header-content">
+            <a href="https://karen-pal.github.io/about" class="home-link">← Karen Palacio</a>
+            <div class="header-controls">
+                <select class="lang-selector" onchange="switchLanguage(this.value)">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                </select>
+                <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav-container">
+        <div class="nav-content">
+            <h1 class="nav-title">COGWAR REPORT</h1>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside class="toc">
+            <h3 class="lang-content es active">Contenido</h3>
+            <h3 class="lang-content en">Contents</h3>
+            <ul class="lang-content es active">
+                <li><a href="#resumen">Resumen</a></li>
+                <li><a href="#introduccion">Introducción</a></li>
+                <li><a href="#contexto">Contexto</a></li>
+                <li class="toc-level-2"><a href="#disuasion">Disuasión</a></li>
+                <li class="toc-level-2"><a href="#momento-multipolar">Momento Multipolar</a></li>
+                <li><a href="#trayectoria">Trayectoria Artística</a></li>
+                <li><a href="#plan-condor-guerra">Plan Cóndor como Guerra Cognitiva</a></li>
+                <li><a href="#proyecto">El Proyecto</a></li>
+                <li><a href="#hallazgos">Hallazgos</a></li>
+                <li><a href="#reflexiones">Reflexiones Finales</a></li>
+            </ul>
+            <ul class="lang-content en">
+                <li><a href="#summary">Summary</a></li>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#context">Context</a></li>
+                <li class="toc-level-2"><a href="#deterrence">Deterrence</a></li>
+                <li class="toc-level-2"><a href="#multipolar-moment">Multipolar Moment</a></li>
+                <li><a href="#trajectory">Artistic Trajectory</a></li>
+                <li><a href="#condor-cognitive-war">Plan Condor as Cognitive War</a></li>
+                <li><a href="#project">The Project</a></li>
+                <li><a href="#findings">Findings</a></li>
+                <li><a href="#final-thoughts">Final Thoughts</a></li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <!-- Spanish Content -->
+            <div class="lang-content es active">
+                <h1>COGWAR REPORT</h1>
+                <div class="metadata">
+                    <p><strong>Arte, Tecnología y Resistencia Cognitiva desde el Sur Global</strong></p>
+                    <p><strong>Karen Palacio</strong><br>
+                    Córdoba, Argentina<br>
+                    27 de Mayo de 2025</p>
+                </div>
+
+                <h2 id="resumen">Resumen</h2>
+                <div class="info-box">
+                    <p>COGWAR REPORT es un proyecto de investigación-creación que investiga la guerra cognitiva a través del análisis discursivo hecho con inteligencia artificial y la creación especulativa de contramedidas digitales. El proyecto establece conexiones históricas entre las operaciones psicológicas del Plan Cóndor (1975-1983) y las técnicas de guerra cognitiva formalizadas recientemente por la OTAN, analizando cómo estas tácticas se manifiestan en el discurso político argentino contemporáneo.</p>
+                    
+                    <p>A través de tecnologías de procesamiento de lenguaje natural, modelos de IA fine-tuneados y visualizaciones semánticas 3D, el proyecto busca revelar las estructuras de poder que operan por debajo de la consciencia, mientras explora formas especulativas de resistencia cognitiva desde una perspectiva del Sur Global.</p>
+                </div>
+
+                <h2 id="introduccion">Introducción: El Arte como Investigación Inmaterial</h2>
+                <p>Una gran parte de mis procesos artísticos es inmaterial. Se ve como pensar, desear y diseñar estructuras de datos, sistemas, datasets, procesos, pipelines. También implican estudiar mucho varios temas porque no me parece bien hacer obra de cosas que no "sé". También por eso muchas de mis obras están relacionadas a temas que estudio durante muchos años: historia argentina y revisionismo, mis sueños, Inteligencia Artificial, programación, semiótica, etc.</p>
+
+                <p>Después llega un momento en que tengo algo que para mí captura algo y lo suelto: lo publico, o lo presento a algún lado.</p>
+
+                <p>Desde finales del 2024 vengo investigando la guerra cognitiva, y la guerra en general. Empecé intentando entender cómo las teorías internas de las fuerzas armadas de las naciones se vuelven doctrinas y estrategias, y cómo afecta la psicología a ese proceso.</p>
+
+                <h2 id="contexto">Contexto: De la Disuasión a la Guerra Cognitiva</h2>
+
+                <h3 id="disuasion">El Concepto de Disuasión</h3>
+                <p>Mi investigación comenzó estudiando el concepto de <strong>disuasión (deterrence)</strong>: la disuasión es exitosa en un contexto bélico si un actor que en otras circunstancias tomaría acciones frente a un conflicto observado no lo hace por convencimiento interno de que 1) no podría ganar o 2) podría ganar, pero las consecuencias serían tan destructivas que no lo justifican. En este caso este actor perdió sin pelear, y su enemigo ganó sin levantar un dedo.</p>
+
+                <p>Esto me hizo acordar a lo que decía Jauretche en Manual de Zonzeras Argentinas:</p>
+                <blockquote>
+                    "...[La colonización pedagógica nos] propone modelos imposibles y oculta los posibles…"
+                </blockquote>
+
+                <p>Lo que más me interesaba de la disuasión es su carácter profundamente psicológico. Tu enemigo tiene que creer que tus amenazas están basadas en la realidad para que la disuasión entre en efecto.</p>
+
+                <h3 id="momento-multipolar">El Momento Multipolar</h3>
+                <p>Estamos en un momento en donde las potencias están mezclando las cartas y re-barajando. En Argentina nos toca lastimosamente en un momento de incontinencia entreguista neocolonial ideologizada. Es ideologizada, porque no nos estamos ofreciendo al más fuerte, sino justamente al barco que se está hundiendo, por las visiones místicas de una persona electa democráticamente.</p>
+
+                <p>Como me gustaría poder hacer algo al respecto, hago arte-tecnología-investigación.</p>
+
+                <h2 id="trayectoria">Trayectoria Artística: Del Plan Cóndor a la Guerra Cognitiva</h2>
+
+                <h3>Antecedentes: Mi Archivo del Plan Cóndor</h3>
+                <p>Empecé a urgar los archivos desclasificados de la CIA en búsqueda de información sobre el Plan Cóndor en 2021. Durante varios años fui creando mi propio archivo de textos que me parecían informativos. Era algo que hacía cuando tenía tiempo libre, y que implicaba tomarme muchos descansos en el medio por la dificultad emocional del tema.</p>
+
+                <h3>planCondorLoRA (2024)</h3>
+                <p>Con mi archivo personal creé un dataset compuesto de pares (imágenes, descripción textual), con el cual entrené un modelo multimodal text-to-image para crear un LoRA, de tal forma en que ahora se puede usar el token "plancondor" para recrear la apariencia de los textos en la página de la CIA.</p>
+
+                <p>Con estos materiales hice varias obras, entre ellas mi performance de livecoding visual en Underclub, en Buenos Aires, Argentina.</p>
+
+                <h3>Cóndor Loop (2024)</h3>
+                <p>Un instrumento visual algorítmico que reconfigura fragmentos de video generados con IA a partir de archivos fotográficos, buscando exponer historias ocultas. Construido a partir de registros de las colecciones botánicas del Museo de Ciencias Naturales Bernardino Rivadavia ligadas a las Islas Malvinas y a la paleobotánica, Cóndor Loop desafía el borramiento histórico creando bucles rítmicos de memoria, desplazamiento y reconstrucción.</p>
+
+                <h3>Funeral para todo régimen de creencias (2024)</h3>
+                <p>Mi primer EP solista de noise, black metal y dungeon synth, que explora las consecuencias del Plan Cóndor en relación a la idea de Walter Benjamin en "Ensayos sobre un concepto de la historia".</p>
+
+                <blockquote>
+                    "[...] Donde a nosotros se nos manifiesta una cadena de datos, él ve una catástrofe única que amontona incansablemente ruina sobre ruina, arrojándolas a sus pies. Bien quisiera él detenerse, despertar a los muertos y recomponer lo despedazado. Pero desde el paraíso sopla un huracán que se ha enredado en sus alas y que es tan fuerte que el ángel ya no puede cerrarlas. Este huracán le empuja irreteniblemente hacia el futuro, al cual da la espalda, mientras que los montones de ruinas crecen ante él hasta el cielo. Ese huracán es lo que nosotros llamamos progreso."<br>
+                    <cite>— 9na Tesis, Tesis de Filosofía de la Historia, Walter Benjamin</cite>
+                </blockquote>
+
+                <h2 id="plan-condor-guerra">Plan Cóndor como Programa de Guerra Cognitiva</h2>
+                <p>En medio de todo este caldo artístico y conceptual, no me fue tan sorpresivo encontrar en mis estudios bélicos que se hayan sucedido estos dos hechos:</p>
+
+                <ul>
+                    <li>En 2023 la OTAN formaliza el concepto de <strong>Guerra Cognitiva</strong>, que nombra un "nuevo" frente de batalla, esta vez interno y subconsciente, que va más allá del dominio informático</li>
+                    <li>En 2024 Milei formaliza la <strong>"Batalla Cultural"</strong>, que tuvo como ritual doctrinario su discurso en Davos</li>
+                </ul>
+
+                <h3>Definición Oficial de Guerra Cognitiva (OTAN, 2023)</h3>
+                <div class="info-box">
+                    <blockquote>
+                        "Los ataques sincronizados y coordinados a las emociones, los pensamientos y los comportamientos afectan la voluntad, la moral, la toma de decisiones y la comprensión de la realidad. Los ataques cognitivos están diseñados para utilizar información para activar los procesos subconscientes de nuestro cerebro, lo que dificulta que nuestra mente consciente perciba la presencia de una amenaza cognitiva"
+                    </blockquote>
+                </div>
+
+                <h3>La Herida Abierta Argentina</h3>
+                <p>En Argentina sabemos que no es nada nuevo ni la Batalla Cultural ni la Guerra Cognitiva. Lo nuevo es que la RAND y la OTAN decidan finalmente hablar de las tácticas involucradas, y no que tengamos que buscar en las páginas de archivos desclasificados.</p>
+
+                <p>En Argentina tenemos una gran vulnerabilidad que es nuestra gran herida abierta, y nuestro karma pendiente: la dictadura genocida cívico-militar del 76.</p>
+
+                <p>Creo que todes les argentines estamos a tres grados de separación de alguien que perdió un familiar en la dictadura. ¿Qué gana políticamente un gobierno metiendo sal a esa herida? ¿Qué se gana políticamente a través de una crueldad tan explícita que se vuelve vulgar?</p>
+
+                <h2 id="proyecto">COGWAR REPORT: El Proyecto</h2>
+
+                <h3>Motivación y Objetivos</h3>
+                <p>Justamente ahora, a seis meses de este proyecto al que le llamo COGWAR REPORT, quería detenerme para tomar notas y dejar constancias autoetnográficas de este proceso. En retrospectiva tiene sentido continuar mis investigaciones-creaciones tendiendo hilos entre el Plan Cóndor y los movimientos geopolíticos neocoloniales actuales, pero eso solo lo puedo ver ahora. La karen de principios de 2025 pensaba que estaba cambiando radicalmente el eje de sus investigaciones-producciones.</p>
+
+                <p>COGWAR REPORT busca provocar un diálogo interdisciplinario sobre IA, seguridad cognitiva y guerra cognitiva. ¿Cómo puede la IA revelar, en lugar de ocultar, las estructuras de poder? ¿Qué contraestrategias pueden interrumpir la desinformación algorítmica? ¿Cómo podemos recuperar estas tecnologías para fortalecer las democracias?</p>
+
+                <h3>Metodología Artística-Tecnológica</h3>
+                <p>El proyecto integra:</p>
+                <ul>
+                    <li><strong>Procesamiento de lenguaje natural (NLP)</strong> para análisis discursivo automatizado</li>
+                    <li><strong>Modelos de lenguaje fine-tuneados</strong> con datasets de guerra cognitiva</li>
+                    <li><strong>Visualizaciones semánticas 3D</strong> que mapean relaciones conceptuales</li>
+                    <li><strong>Generación especulativa</strong> de contramedidas y amuletos digitales</li>
+                    <li><strong>Interfaces experimentales</strong> que revelan la densidad de violencia discursiva</li>
+                </ul>
+
+                <h3>Los Datasets como Arte-Investigación</h3>
+                <p>Este proyecto implica una generación constante de datasets - una característica común de proyectos de NLP en no-Inglés donde siempre se empieza desde cero:</p>
+
+                <ol>
+                    <li><strong>Dataset de Guerra Cognitiva</strong>: 29 pares pregunta-respuesta basados en fuentes oficiales (OTAN, RAND)</li>
+                    <li><strong>Dataset de Discursos Políticos</strong>: Transcripciones de discursos de la política argentina contemporánea</li>
+                    <li><strong>Dataset Plan Cóndor</strong>: Mi archivo personal convertido a texto mediante OCR y transcripción manual</li>
+                    <li><strong>Dataset de Contramedidas Especulativas</strong>: Amuletos y sigilos generados algorítmicamente</li>
+                </ol>
+
+                <h3>Exploraciones Visuales y Sensoriales</h3>
+                <p>Además del análisis textual, el proyecto incluye:</p>
+                <ul>
+                    <li><strong>Sistema de detección de silueta</strong> en tiempo real con visualización del ojo derecho</li>
+                    <li><strong>Sistema reactivo</strong> que proyecta palabras al detectar parpadeos o desvío de mirada</li>
+                    <li><strong>Espacios semánticos 3D</strong> multilingües que permiten navegación conceptual</li>
+                    <li><strong>ASCII art animado</strong> generado por IA como formas de resistencia especulativa</li>
+                </ul>
+
+                <h2 id="hallazgos">Hallazgos y Reflexiones</h2>
+
+                <h3>Amuletos Algorítmicos</h3>
+                <p>DeepSeek R1, al ser empujado a alucinar, genera sigilos de protección contra la guerra cognitiva mezclando múltiples idiomas:</p>
+
+                <pre><code>                  ▓▓▓▓▓▓                ▓▓▓▓▓▓                
+                  ▓▓▓▓▓▓  ▐▌ ▓▓▓▓▓▓                
+                   ▕▕            ▕▕                    
+                   ▓▓▓▓▓▓  ▐▌ ▓▓▓▓▓▓                
+                  ▓▓▓▓▓▓                ▓▓▓▓▓▓                
+╔══════�═╔═════╗ ▓□▓     ░▆▄▆          ▓□▓ ░▆▄▆ ▓□▓
+║     ghostly ▓▓▓▓▓▓     ░▼ rocio ▆shows        shield__▘
+║     Whisperes ╔══██╗    ░▼ flavours ☂️   ▐▌ ▘✓
+║     Usually By ▕▕██▕▕   ▒▼ psique █▀█▀   ▐▌ ▘✓
+║     Theft Of     ▓▀█▀   ▘▁█�▀ ▆️   ▐▌ ▘✓
+║     Thoughts Is   ▙▄▁▄▟顿 Giochi进一步影刺     ▐▌ ▘✓
+╚══════�═╚═════╝    ▓▀█▀   ▘▁█�▀ ▆️   ▐▌ ▘✓
+
+                                                                                     ■▲
+                                                                     ::.inicio::      ■▲
+                                                                     ::salto::       ■▲
+                                                                     ::captura::      ■▲
+                                                                     ::influencia:: ■▲
+                                                                     ::distracción::■▲
+                                                                     ::::mente::::■▲
+
+La guerra cognitiva se centra en el control de la percepción y el etiquetado de la realidad
+</code></pre>
+
+                <p>En ese amuleto hay 5 idiomas - inglés, español, francés, chino e italiano. Una hiperdensidad semántica que busca crear resistencia a través del exceso de significado.</p>
+
+                <h3>Desafíos Técnicos como Hallazgos Artísticos</h3>
+                <p>Los discursos políticos contemporáneos son difíciles de analizar hasta por argentinos nativos. Están llenos de inconsistencias, sintaxis fragmentada, cambios abruptos de tema, pero también densidad de referencias históricas e ideológicas. Esta combinación hace el análisis automático realmente desafiante - pero también revela algo sobre la naturaleza fragmentada del discurso autoritario.</p>
+
+                <h3>La Estética de la Vigilancia</h3>
+                <p>El proyecto explora una estética de la sospecha, de la vigilancia, de la paranoia sensible. Los módulos visuales buscan generar incomodidad, despertar la intuición de que "algo más está pasando", desnaturalizar el clima de violencia política que vivimos.</p>
+
+                <h2 id="reflexiones">Reflexiones Finales: Arte-Tecnología como Campo de Resistencia</h2>
+                <p>COGWAR REPORT es un proyecto activo y en progreso. Presenta desafíos tanto técnicos como éticos y artístico-discursivos.</p>
+
+                <p>Poder relacionar el concepto de Guerra Cognitiva al Plan Cóndor y a la política contemporánea es una tarea importante porque su realidad afecta directamente a la toma de decisiones y la vida personal de habitantes de países enteros.</p>
+
+                <p>Ya formalizado como un dominio de guerra, la protección cognitiva se vuelve una cuestión de derecho civil en un mundo en donde es imposible ni para expertos ni para personas de a pie encontrar la distinción entre la paz y la guerra.</p>
+
+                <p>Encontrar formas ciudadanas de resilencia y resistencia desde nuestro conocimiento cultural-tecnológico es parte de pensar al arte-tecnología como un campo del saber comprometido con la realidad de la sociedad y el territorio.</p>
+
+                <h3>Estado Actual del Proyecto (Mayo 2025)</h3>
+                <ul>
+                    <li><strong>Dataset de Guerra Cognitiva</strong>: 29 QA pairs, 9,879 palabras</li>
+                    <li><strong>Modelo fine-tuneado</strong>: LLaMA 3 entrenado en dataset custom</li>
+                    <li><strong>Framework de análisis</strong>: Multidimensional (emociones, binarismos, geopolítica, simbolismo)</li>
+                    <li><strong>Visualizaciones semánticas</strong>: Espacios 3D multilingües operativos</li>
+                    <li><strong>Módulos interactivos</strong>: Sistemas de detección ocular y amuletos ASCII animados</li>
+                </ul>
+
+                <h3>Próximos Pasos</h3>
+                <p>El proyecto aspira a convertirse en una herramienta de análisis ciudadano que permita identificar y resistir técnicas de guerra cognitiva, manteniendo siempre el compromiso con la soberanía tecnológica y la democracia desde el Sur Global.</p>
+
+                <div class="author-info">
+                    <p><strong>Karen Palacio aka kadaver</strong><br>
+                    Córdoba, Argentina<br>
+                    <a href="https://instagram.com/kardaver">Instagram: @kardaver</a><br>
+                    <a href="https://www.youtube.com/@karenpalacio">YouTube: Karen Palacio</a></p>
+                </div>
+            </div>
+
+            <!-- English Content -->
+            <div class="lang-content en">
+                <h1>COGWAR REPORT</h1>
+                <div class="metadata">
+                    <p><strong>Art, Technology and Cognitive Resistance from the Global South</strong></p>
+                    <p><strong>Karen Palacio</strong><br>
+                    Córdoba, Argentina<br>
+                    May 27th, 2025</p>
+                </div>
+
+                <h2 id="summary">Summary</h2>
+                <div class="info-box">
+                    <p>COGWAR REPORT is a research-creation project that investigates cognitive warfare through AI-powered discourse analysis and the speculative creation of digital countermeasures. The project establishes historical connections between the psychological operations of Plan Condor (1975-1983) and the cognitive warfare techniques recently formalized by NATO, analyzing how these tactics manifest in contemporary Argentine political discourse.</p>
+                    
+                    <p>Through natural language processing technologies, fine-tuned AI models, and 3D semantic visualizations, the project seeks to reveal power structures operating below consciousness, while exploring speculative forms of cognitive resistance from a Global South perspective.</p>
+                </div>
+
+                <h2 id="introduction">Introduction: Art as Immaterial Research</h2>
+                <p>A large part of my artistic processes is immaterial. It looks like thinking, desiring and designing data structures, systems, datasets, processes, pipelines. They also involve studying many topics extensively because I don't think it's right to make work about things I don't "know". That's also why many of my works are related to topics I study for many years: Argentine history and revisionism, my dreams, Artificial Intelligence, programming, semiotics, etc.</p>
+
+                <p>Then comes a moment when I have something that for me captures something and I release it: I publish it, or present it somewhere.</p>
+
+                <p>Since the end of 2024 I've been researching cognitive warfare, and warfare in general. I started trying to understand how the internal theories of nations' armed forces become doctrines and strategies, and how psychology affects that process.</p>
+
+                <h2 id="context">Context: From Deterrence to Cognitive Warfare</h2>
+
+                <h3 id="deterrence">The Concept of Deterrence</h3>
+                <p>My research began studying the concept of <strong>deterrence</strong>: deterrence is successful in a warlike context if an actor who would otherwise take action in the face of an observed conflict does not do so due to internal conviction that 1) they could not win or 2) they could win, but the consequences would be so destructive as to not justify it. In this case this actor lost without fighting, and their enemy won without lifting a finger.</p>
+
+                <p>This reminded me of what Jauretche said in "Manual de Zonzeras Argentinas":</p>
+                <blockquote>
+                    "...[Pedagogical colonization] proposes impossible models and hides the possible ones..."
+                </blockquote>
+
+                <p>What interested me most about deterrence is its deeply psychological character. Your enemy has to believe that your threats are based on reality for deterrence to take effect.</p>
+
+                <h3 id="multipolar-moment">The Multipolar Moment</h3>
+                <p>We are at a moment where the powers are shuffling the cards and re-dealing. In Argentina, we unfortunately find ourselves at a moment of ideologized neocolonial submission. It is ideologized, because we are not offering ourselves to the strongest, but precisely to the sinking ship, due to the mystical visions of a democratically elected person.</p>
+
+                <p>Since I would like to be able to do something about it, I make art-technology-research.</p>
+
+                <h2 id="trajectory">Artistic Trajectory: From Plan Condor to Cognitive Warfare</h2>
+
+                <h3>Background: My Plan Condor Archive</h3>
+                <p>I started digging through declassified CIA archives in search of information about Plan Condor in 2021. For several years I was creating my own archive of texts that seemed informative to me. It was something I did when I had free time, and it involved taking many breaks in between due to the emotional difficulty of the subject.</p>
+
+                <h3>planCondorLoRA (2024)</h3>
+                <p>With my personal archive I created a dataset composed of pairs (images, textual description), with which I trained a multimodal text-to-image model to create a LoRA, so that now the token "plancondor" can be used to recreate the appearance of texts on the CIA page.</p>
+
+                <p>With these materials I made several works, including my visual livecoding performance at Underclub, in Buenos Aires, Argentina.</p>
+
+                <h3>Cóndor Loop (2024)</h3>
+                <p>An algorithmic visual instrument that reconfigures AI-generated video fragments from photographic archives, seeking to expose hidden stories. Built from records of the botanical collections of the Bernardino Rivadavia Natural Sciences Museum linked to the Malvinas Islands and paleobotany, Cóndor Loop challenges historical erasure by creating rhythmic loops of memory, displacement and reconstruction.</p>
+
+                <h3>Funeral for Every Belief System (2024)</h3>
+                <p>My first solo EP of noise, black metal and dungeon synth, which explores the consequences of Plan Condor in relation to Walter Benjamin's idea in "Essays on a Concept of History".</p>
+
+                <blockquote>
+                    "[...] Where we perceive a chain of events, he sees one single catastrophe which keeps piling wreckage upon wreckage and hurls it in front of his feet. The angel would like to stay, awaken the dead, and make whole what has been smashed. But a gale is blowing from Paradise; it has got caught in his wings with such violence that the angel can no longer close them. This gale irresistibly propels him into the future to which his back is turned, while the pile of debris before him grows skyward. This storm is what we call progress."<br>
+                    <cite>— 9th Thesis, Theses on the Philosophy of History, Walter Benjamin</cite>
+                </blockquote>
+
+                <h2 id="condor-cognitive-war">Plan Condor as Cognitive Warfare Program</h2>
+                <p>In the midst of all this artistic and conceptual broth, it was not so surprising to find in my war studies that these two events had occurred:</p>
+
+                <ul>
+                    <li>In 2023 NATO formalizes the concept of <strong>Cognitive Warfare</strong>, which names a "new" battlefront, this time internal and subconscious, that goes beyond the computer domain</li>
+                    <li>In 2024 Milei formalizes the <strong>"Cultural Battle"</strong>, which had his speech in Davos as its doctrinal ritual</li>
+                </ul>
+
+                <h3>Official Definition of Cognitive Warfare (NATO, 2023)</h3>
+                <div class="info-box">
+                    <blockquote>
+                        "Synchronized and coordinated attacks on emotions, thoughts and behaviors affect will, morale, decision-making and understanding of reality. Cognitive attacks are designed to use information to activate the subconscious processes of our brain, making it difficult for our conscious mind to perceive the presence of a cognitive threat"
+                    </blockquote>
+                </div>
+
+                <h3>Argentina's Open Wound</h3>
+                <p>In Argentina we know that neither the Cultural Battle nor Cognitive Warfare is anything new. What's new is that RAND and NATO finally decide to talk about the tactics involved, and not that we have to search in the pages of declassified archives.</p>
+
+                <p>In Argentina we have a great vulnerability which is our great open wound, and our pending karma: the civic-military genocidal dictatorship of '76.</p>
+
+                <p>I believe that all Argentines are three degrees of separation from someone who lost a family member in the dictatorship. What does a government gain politically by putting salt in that wound? What is gained politically through such explicit cruelty that it becomes vulgar?</p>
+
+                <h2 id="project">COGWAR REPORT: The Project</h2>
+
+                <h3>Motivation and Objectives</h3>
+                <p>Just now, six months into this project that I call COGWAR REPORT, I wanted to stop to take notes and leave autoethnographic records of this process. In retrospect it makes sense to continue my research-creations weaving threads between Plan Condor and current neocolonial geopolitical movements, but I can only see that now. The Karen of early 2025 thought she was radically changing the axis of her research-productions.</p>
+
+                <p>COGWAR REPORT seeks to provoke an interdisciplinary dialogue about AI, cognitive security and cognitive warfare. How can AI reveal, rather than hide, power structures? What counter-strategies can interrupt algorithmic disinformation? How can we recover these technologies to strengthen democracies?</p>
+
+                <h3>Artistic-Technological Methodology</h3>
+                <p>The project integrates:</p>
+                <ul>
+                    <li><strong>Natural language processing (NLP)</strong> for automated discourse analysis</li>
+                    <li><strong>Fine-tuned language models</strong> with cognitive warfare datasets</li>
+                    <li><strong>3D semantic visualizations</strong> that map conceptual relationships</li>
+                    <li><strong>Speculative generation</strong> of countermeasures and digital amulets</li>
+                    <li><strong>Experimental interfaces</strong> that reveal the density of discursive violence</li>
+                </ul>
+
+                <h3>Datasets as Art-Research</h3>
+                <p>This project involves a constant generation of datasets - a common characteristic of NLP projects in non-English where you always start from scratch:</p>
+
+                <ol>
+                    <li><strong>Cognitive Warfare Dataset</strong>: 29 question-answer pairs based on official sources (NATO, RAND)</li>
+                    <li><strong>Political Speeches Dataset</strong>: Transcriptions of speeches from contemporary Argentine politics</li>
+                    <li><strong>Plan Condor Dataset</strong>: My personal archive converted to text through OCR and manual transcription</li>
+                    <li><strong>Speculative Countermeasures Dataset</strong>: Algorithmically generated amulets and sigils</li>
+                </ol>
+
+                <h3>Visual and Sensory Explorations</h3>
+                <p>In addition to textual analysis, the project includes:</p>
+                <ul>
+                    <li><strong>Real-time silhouette detection system</strong> with right eye visualization</li>
+                    <li><strong>Reactive system</strong> that projects words when detecting blinks or gaze deviation</li>
+                    <li><strong>Multilingual 3D semantic spaces</strong> that allow conceptual navigation</li>
+                    <li><strong>AI-generated animated ASCII art</strong> as forms of speculative resistance</li>
+                </ul>
+
+                <h2 id="findings">Findings and Reflections</h2>
+
+                <h3>Algorithmic Amulets</h3>
+                <p>DeepSeek R1, when pushed to hallucinate, generates protection sigils against cognitive warfare mixing multiple languages:</p>
+
+                <pre><code>                  ▓▓▓▓▓▓                ▓▓▓▓▓▓                
+                  ▓▓▓▓▓▓  ▐▌ ▓▓▓▓▓▓                
+                   ▕▕            ▕▕                    
+                   ▓▓▓▓▓▓  ▐▌ ▓▓▓▓▓▓                
+                  ▓▓▓▓▓▓                ▓▓▓▓▓▓                
+╔══════�═╔═════╗ ▓□▓     ░▆▄▆          ▓□▓ ░▆▄▆ ▓□▓
+║     ghostly ▓▓▓▓▓▓     ░▼ rocio ▆shows        shield__▘
+║     Whisperes ╔══██╗    ░▼ flavours ☂️   ▐▌ ▘✓
+║     Usually By ▕▕██▕▕   ▒▼ psique █▀█▀   ▐▌ ▘✓
+║     Theft Of     ▓▀█▀   ▘▁█�▀ ▆️   ▐▌ ▘✓
+║     Thoughts Is   ▙▄▁▄▟顿 Giochi进一步影刺     ▐▌ ▘✓
+╚══════�═╚═════╝    ▓▀█▀   ▘▁█�▀ ▆️   ▐▌ ▘✓
+
+                                                                                     ■▲
+                                                                     ::.inicio::      ■▲
+                                                                     ::salto::       ■▲
+                                                                     ::captura::      ■▲
+                                                                     ::influencia:: ■▲
+                                                                     ::distracción::■▲
+                                                                     ::::mente::::■▲
+
+Cognitive warfare focuses on controlling perception and labeling of reality
+</code></pre>
+
+                <p>In that amulet there are 5 languages - English, Spanish, French, Chinese and Italian. A semantic hyperdensity that seeks to create resistance through excess meaning.</p>
+
+                <h3>Technical Challenges as Artistic Findings</h3>
+                <p>Contemporary political speeches are difficult to analyze even for native Argentines. They are full of inconsistencies, fragmented syntax, abrupt topic changes, but also density of historical and ideological references. This combination makes automatic analysis really challenging - but also reveals something about the fragmented nature of authoritarian discourse.</p>
+
+                <h3>The Aesthetics of Surveillance</h3>
+                <p>The project explores an aesthetics of suspicion, of surveillance, of sensitive paranoia. The visual modules seek to generate discomfort, awaken the intuition that "something else is happening", denaturalize the climate of political violence we live in.</p>
+
+                <h2 id="final-thoughts">Final Reflections: Art-Technology as a Field of Resistance</h2>
+                <p>COGWAR REPORT is an active and ongoing project. It presents challenges that are technical as well as ethical and artistic-discursive.</p>
+
+                <p>Being able to relate the concept of Cognitive Warfare to Plan Condor and contemporary politics is an important task because its reality directly affects decision-making and the personal lives of inhabitants of entire countries.</p>
+
+                <p>Already formalized as a domain of war, cognitive protection becomes a matter of civil rights in a world where it is impossible for experts and ordinary people alike to find the distinction between peace and war.</p>
+
+                <p>Finding citizen forms of resilience and resistance from our cultural-technological knowledge is part of thinking about art-technology as a field of knowledge committed to the reality of society and territory.</p>
+
+                <h3>Current Project Status (May 2025)</h3>
+                <ul>
+                    <li><strong>Cognitive Warfare Dataset</strong>: 29 QA pairs, 9,879 words</li>
+                    <li><strong>Fine-tuned model</strong>: LLaMA 3 trained on custom dataset</li>
+                    <li><strong>Analysis framework</strong>: Multidimensional (emotions, binarisms, geopolitics, symbolism)</li>
+                    <li><strong>Semantic visualizations</strong>: Operational multilingual 3D spaces</li>
+                    <li><strong>Interactive modules</strong>: Eye detection systems and animated ASCII amulets</li>
+                </ul>
+
+                <h3>Next Steps</h3>
+                <p>The project aspires to become a citizen analysis tool that allows identifying and resisting cognitive warfare techniques, always maintaining commitment to technological sovereignty and democracy from the Global South.</p>
+
+                <div class="author-info">
+                    <p><strong>Karen Palacio aka kadaver</strong><br>
+                    Córdoba, Argentina<br>
+                    <a href="https://instagram.com/kardaver">Instagram: @kardaver</a><br>
+                    <a href="https://www.youtube.com/@karenpalacio">YouTube: Karen Palacio</a></p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Language switching
+        function switchLanguage(lang) {
+            const contents = document.querySelectorAll('.lang-content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+                if (content.classList.contains(lang)) {
+                    content.classList.add('active');
+                }
+            });
+            
+            // Update document language
+            document.documentElement.lang = lang;
+            
+            // Store preference
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Theme switching
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('preferredTheme', newTheme);
+        }
+
+        // Load saved preferences
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load theme preference
+            const savedTheme = localStorage.getItem('preferredTheme') || 'light';
+            document.body.setAttribute('data-theme', savedTheme);
+            
+            // Load language preference
+            const savedLang = localStorage.getItem('preferredLanguage') || 'es';
+            const langSelector = document.querySelector('.lang-selector');
+            langSelector.value = savedLang;
+            switchLanguage(savedLang);
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+
+        // Add scroll spy for TOC
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('h2[id], h3[id]');
+            const tocLinks = document.querySelectorAll('.toc a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
