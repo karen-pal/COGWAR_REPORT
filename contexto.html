@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COGWAR REPORT - Karen Palacio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <title>COGWAR REPORT - Karen Palacio</title>
     <style>
         :root {
             --bg-color: #ffffff;
@@ -102,7 +102,6 @@
         }
 
         .nav-content {
-	    font-family:"Courier New", monospace;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 15px;
@@ -127,12 +126,45 @@
             gap: 20px;
         }
 
-        /* Sidebar TOC */
-        .toc {
-	    font-family: "IBM Plex Sans", sans-serif;
+        /* Sidebar container for icon and TOC */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
             position: sticky;
             top: 20px;
             height: fit-content;
+        }
+
+        /* Wikipedia-style floating icon */
+        .page-icon {
+            background-color: var(--box-bg);
+            border: 1px solid var(--box-border);
+            padding: 15px;
+            border-radius: 2px;
+            text-align: center;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-icon img {
+            max-width: 200px;
+            max-height: auto;
+            width: auto;
+            height: auto;
+        }
+
+        .page-icon .icon-placeholder {
+            font-size: 40px;
+            color: var(--border-color);
+            opacity: 0.7;
+        }
+
+        /* Sidebar TOC */
+        .toc {
+	    font-family: "IBM Plex Sans", sans-serif;
             background-color: var(--box-bg);
             border: 1px solid var(--box-border);
             padding: 15px;
@@ -140,7 +172,7 @@
         }
 
         .toc h3 {
-            font-size: 17px;
+            font-size: 13px;
             margin-bottom: 10px;
             font-weight: bold;
             color: var(--text-color);
@@ -286,12 +318,79 @@
             margin-bottom: 5px;
         }
 
+        /* Wikipedia-style image cards */
+        .image-card {
+            background-color: var(--box-bg);
+            border: 1px solid var(--box-border);
+            padding: 8px;
+            margin: 20px 0;
+            border-radius: 2px;
+            float: right;
+            max-width: 300px;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .image-card.left {
+            float: left;
+            margin-right: 20px;
+            margin-left: 0;
+        }
+
+        .image-card.center {
+            float: none;
+            margin: 20px auto;
+            display: block;
+        }
+
+	.image-card.big {
+	   float: none;
+	   max-width: 100%;
+	   margin: 20px 0;
+	   display: block;
+	}
+        .image-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .image-card .caption {
+            font-size: 12px;
+            line-height: 1.4;
+            color: var(--text-color);
+            text-align: left;
+            margin: 0;
+        }
+
+        .image-card .caption strong {
+            font-weight: bold;
+        }
+
+        /* Clear floats after image cards */
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Responsive image cards */
+        @media (max-width: 768px) {
+            .image-card {
+                float: none !important;
+                max-width: 100%;
+                margin: 15px 0;
+            }
+        }
+
         /* Author info */
         .author-info {
             border-top: 1px solid var(--border-color);
             padding-top: 20px;
             margin-top: 40px;
             font-size: 13px;
+            clear: both;
         }
 
         /* Hidden content for language switching */
@@ -310,10 +409,21 @@
                 padding: 15px 10px;
             }
 
-            .toc {
+            .sidebar {
                 position: relative;
                 top: auto;
                 order: -1;
+                flex-direction: row;
+                gap: 10px;
+            }
+
+            .page-icon {
+                flex: 0 0 auto;
+                min-width: 80px;
+            }
+
+            .toc {
+                flex: 1;
             }
 
             .header-content {
@@ -413,33 +523,42 @@
     </nav>
 
     <div class="container">
-        <aside class="toc">
-            <h3 class="lang-content es active">Contenido</h3>
-            <h3 class="lang-content en">Contents</h3>
-            <ul class="lang-content es active">
-                <li><a href="#resumen">Resumen</a></li>
-                <li><a href="#introduccion">Introducción</a></li>
-                <li><a href="#contexto">Contexto</a></li>
-                <li class="toc-level-2"><a href="#disuasion">Disuasión</a></li>
-                <li class="toc-level-2"><a href="#momento-multipolar">Momento Multipolar</a></li>
-                <li><a href="#trayectoria">Trayectoria Artística</a></li>
-                <li><a href="#plan-condor-guerra">Plan Cóndor como Guerra Cognitiva</a></li>
-                <li><a href="#proyecto">El Proyecto</a></li>
-                <li><a href="#hallazgos">Hallazgos</a></li>
-                <li><a href="#reflexiones">Reflexiones Finales</a></li>
-            </ul>
-            <ul class="lang-content en">
-                <li><a href="#summary">Summary</a></li>
-                <li><a href="#introduction">Introduction</a></li>
-                <li><a href="#context">Context</a></li>
-                <li class="toc-level-2"><a href="#deterrence">Deterrence</a></li>
-                <li class="toc-level-2"><a href="#multipolar-moment">Multipolar Moment</a></li>
-                <li><a href="#trajectory">Artistic Trajectory</a></li>
-                <li><a href="#condor-cognitive-war">Plan Condor as Cognitive War</a></li>
-                <li><a href="#project">The Project</a></li>
-                <li><a href="#findings">Findings</a></li>
-                <li><a href="#final-thoughts">Final Thoughts</a></li>
-            </ul>
+        <aside class="sidebar">
+            <!-- Page icon (like Wikipedia) -->
+            <div class="page-icon">
+                <!-- Placeholder icon - replace with your image -->
+                <img src="cogwar-icon.png" alt="El sur es el nuevo norte">
+            </div>
+            
+            <!-- Table of Contents -->
+            <div class="toc">
+                <h3 class="lang-content es active">Contenido</h3>
+                <h3 class="lang-content en">Contents</h3>
+                <ul class="lang-content es active">
+                    <li><a href="#resumen">Resumen</a></li>
+                    <li><a href="#introduccion">Introducción</a></li>
+                    <li><a href="#contexto">Contexto</a></li>
+                    <li class="toc-level-2"><a href="#disuasion">Disuasión</a></li>
+                    <li class="toc-level-2"><a href="#momento-multipolar">Momento Multipolar</a></li>
+                    <li><a href="#trayectoria">Trayectoria Artística</a></li>
+                    <li><a href="#plan-condor-guerra">Plan Cóndor como Guerra Cognitiva</a></li>
+                    <li><a href="#proyecto">El Proyecto</a></li>
+                    <li><a href="#hallazgos">Hallazgos</a></li>
+                    <li><a href="#reflexiones">Reflexiones Finales</a></li>
+                </ul>
+                <ul class="lang-content en">
+                    <li><a href="#summary">Summary</a></li>
+                    <li><a href="#introduction">Introduction</a></li>
+                    <li><a href="#context">Context</a></li>
+                    <li class="toc-level-2"><a href="#deterrence">Deterrence</a></li>
+                    <li class="toc-level-2"><a href="#multipolar-moment">Multipolar Moment</a></li>
+                    <li><a href="#trajectory">Artistic Trajectory</a></li>
+                    <li><a href="#condor-cognitive-war">Plan Condor as Cognitive War</a></li>
+                    <li><a href="#project">The Project</a></li>
+                    <li><a href="#findings">Findings</a></li>
+                    <li><a href="#final-thoughts">Final Thoughts</a></li>
+                </ul>
+            </div>
         </aside>
 
         <main class="content">
@@ -451,6 +570,12 @@
                     <p><strong>Karen Palacio</strong><br>
                     Córdoba, Argentina<br>
                     27 de Mayo de 2025</p>
+                <div class="image-card">
+                    <img src="ojo.png" alt="Imagen representativa del proyecto">
+                    <div class="caption">
+                        <strong>!</strong>
+                    </div>
+                </div>
                 </div>
 
                 <h2 id="resumen">Resumen</h2>
@@ -458,14 +583,23 @@
                     <p>COGWAR REPORT es un proyecto de investigación-creación que investiga la guerra cognitiva a través del análisis discursivo hecho con inteligencia artificial y la creación especulativa de contramedidas digitales. El proyecto establece conexiones históricas entre las operaciones psicológicas del Plan Cóndor (1975-1983) y las técnicas de guerra cognitiva formalizadas recientemente por la OTAN, analizando cómo estas tácticas se manifiestan en el discurso político argentino contemporáneo.</p>
                     
                     <p>A través de tecnologías de procesamiento de lenguaje natural, modelos de IA fine-tuneados y visualizaciones semánticas 3D, el proyecto busca revelar las estructuras de poder que operan por debajo de la consciencia, mientras explora formas especulativas de resistencia cognitiva desde una perspectiva del Sur Global.</p>
+		    <p>Voy a estar presentando y trabajando colectivamente COGWAR REPORT en México en Junio de 2025, en el marco de realML, así que publico este material como contexto, y como esfuerzo autoetnográfico de dejar constancia de mis procesos artísticos</p> 
                 </div>
 
                 <h2 id="introduccion">Introducción: El Arte como Investigación Inmaterial</h2>
+                
+                
                 <p>Una gran parte de mis procesos artísticos es inmaterial. Se ve como pensar, desear y diseñar estructuras de datos, sistemas, datasets, procesos, pipelines. También implican estudiar mucho varios temas porque no me parece bien hacer obra de cosas que no "sé". También por eso muchas de mis obras están relacionadas a temas que estudio durante muchos años: historia argentina y revisionismo, mis sueños, Inteligencia Artificial, programación, semiótica, etc.</p>
 
                 <p>Después llega un momento en que tengo algo que para mí captura algo y lo suelto: lo publico, o lo presento a algún lado.</p>
 
                 <p>Desde finales del 2024 vengo investigando la guerra cognitiva, y la guerra en general. Empecé intentando entender cómo las teorías internas de las fuerzas armadas de las naciones se vuelven doctrinas y estrategias, y cómo afecta la psicología a ese proceso.</p>
+                <div class="image-card center big">
+                    <img src="cognitive_domain.jpg" alt="Cognitive domain in war">
+                    <div class="caption">
+			    <strong>Ciclo OODA y el Entorno de Información </strong> Cuaderno de campo con estudios de doctrina militar. El ciclo OODA (<strong>O</strong>bservar <strong>O</strong>rientar <strong>D</strong>ecidir <strong>A</strong>ctuar) es un marco sistémico para la toma de decisiones en el entorno de la información. Se puede entender la Guerra Cognitiva como una interferencia planificada del Ciclo OODA de las personas <blockquote>"Mientras que la guerra de información consiste en modificar una acción de forma limitada, la guerra cognitiva intenta moldear al objetivo para que controle sus intenciones proporcionándole marcos de lectura adecuados." (Moinet (2024))</blockquote>.
+                    </div>
+                </div>
 
                 <h2 id="contexto">Contexto: De la Disuasión a la Guerra Cognitiva</h2>
 
@@ -644,6 +778,7 @@ La guerra cognitiva se centra en el control de la percepción y el etiquetado de
                     <p>COGWAR REPORT is a research-creation project that investigates cognitive warfare through AI-powered discourse analysis and the speculative creation of digital countermeasures. The project establishes historical connections between the psychological operations of Plan Condor (1975-1983) and the cognitive warfare techniques recently formalized by NATO, analyzing how these tactics manifest in contemporary Argentine political discourse.</p>
                     
                     <p>Through natural language processing technologies, fine-tuned AI models, and 3D semantic visualizations, the project seeks to reveal power structures operating below consciousness, while exploring speculative forms of cognitive resistance from a Global South perspective.</p>
+		    <p>I will be presenting and working collectively on COGWAR REPORT in Mexico in June 2025, within the framework of realML, so I am publishing this material as context, and as an autoethnographic effort to record my artistic processes.</p>
                 </div>
 
                 <h2 id="introduction">Introduction: Art as Immaterial Research</h2>
