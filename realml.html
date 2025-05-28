@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <title>COGWAR REPORT - Karen Palacio</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #222;
+            --border-color: #a2a9b1;
+            --link-color: #0645ad;
+            --link-visited: #0b0080;
+            --link-hover: #06c;
+            --box-bg: #f8f9fa;
+            --box-border: #eaecf0;
+            --header-bg: #f6f6f6;
+            --header-border: #c8ccd1;
+            --nav-bg: #f6f6f6;
+            --nav-border: #c8ccd1;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #e6e6e6;
+            --border-color: #444;
+            --link-color: #6bb6ff;
+            --link-visited: #9b59b6;
+            --link-hover: #82caff;
+            --box-bg: #2a2a2a;
+            --box-border: #404040;
+            --header-bg: #2d2d2d;
+            --header-border: #444;
+            --nav-bg: #2d2d2d;
+            --nav-border: #444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Lato, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            font-size: 14px;
+        }
+
+        /* Header */
+        .header {
+            background-color: var(--header-bg);
+            border-bottom: 1px solid var(--header-border);
+            padding: 8px 0;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .home-link {
+            color: var(--link-color);
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .lang-selector, .theme-toggle {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 4px 8px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .lang-selector:hover, .theme-toggle:hover {
+            background-color: var(--box-bg);
+        }
+
+        /* Navigation */
+        .nav-container {
+            background-color: var(--nav-bg);
+            border-bottom: 1px solid var(--nav-border);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .nav-title {
+            font-size: 24px;
+            font-weight: normal;
+            padding: 15px 0;
+            margin: 0;
+            border-bottom: 3px solid var(--link-color);
+            display: inline-block;
+        }
+
+        /* Main content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 15px;
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 20px;
+        }
+
+        /* Sidebar container for icon and TOC */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+
+        /* Wikipedia-style floating icon */
+        .page-icon {
+            background-color: var(--box-bg);
+            border: 1px solid var(--box-border);
+            padding: 15px;
+            border-radius: 2px;
+            text-align: center;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-icon img {
+            max-width: 200px;
+            max-height: auto;
+            width: auto;
+            height: auto;
+        }
+
+        .page-icon .icon-placeholder {
+            font-size: 40px;
+            color: var(--border-color);
+            opacity: 0.7;
+        }
+
+        /* Sidebar TOC */
+        .toc {
+	    font-family: "IBM Plex Sans", sans-serif;
+            background-color: var(--box-bg);
+            border: 1px solid var(--box-border);
+            padding: 15px;
+            border-radius: 2px;
+        }
+
+        .toc h3 {
+            font-size: 13px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin-bottom: 5px;
+        }
+
+        .toc a {
+            color: var(--link-color);
+            text-decoration: none;
+            font-size: 12px;
+            display: block;
+            padding: 2px 0;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        .toc .toc-level-2 {
+            padding-left: 15px;
+        }
+
+        .toc .toc-level-3 {
+            padding-left: 30px;
+        }
+
+        /* Main content */
+        .content {
+            background-color: var(--bg-color);
+            max-width: 100%;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+
+        .content h1 {
+	    font-family:"Courier New", monospace;
+            font-size: 32px;
+            font-weight: normal;
+            margin-bottom: 5px;
+            border-bottom: 3px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        .content h2 {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 30px 0 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 3px;
+        }
+
+        .content h3 {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 25px 0 10px 0;
+        }
+
+        .content h4 {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 20px 0 8px 0;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+            max-width: 100%;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+
+        .content a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        .content a:visited {
+            color: var(--link-visited);
+        }
+
+        .content a:hover {
+            color: var(--link-hover);
+            text-decoration: underline;
+        }
+
+        .content ul, .content ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        .content li {
+            margin-bottom: 8px;
+        }
+
+        /* Info box */
+        .info-box {
+            background-color: var(--box-bg);
+            border: 1px solid var(--box-border);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 2px;
+        }
+
+        .info-box h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        /* Quote blocks */
+        blockquote {
+            border-left: 4px solid var(--border-color);
+            padding-left: 15px;
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        /* Code blocks */
+        pre {
+            background-color: var(--box-bg);
+            border: 1px solid var(--box-border);
+            padding: 15px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-radius: 2px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 12px;
+            line-height: 1.4;
+            max-width: 100%;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        code {
+            background-color: var(--box-bg);
+            padding: 2px 4px;
+            border-radius: 2px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 12px;
+        }
+
+        /* Metadata */
+        .metadata {
+            background-color: var(--box-bg);
+            border: 1px solid var(--box-border);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 2px;
+            font-size: 13px;
+        }
+
+        .metadata p {
+            margin-bottom: 5px;
+        }
+
+        /* Wikipedia-style image cards */
+        .image-card {
+            background-color: var(--box-bg);
+            border: 1px solid var(--box-border);
+            padding: 8px;
+            margin: 20px 0;
+            border-radius: 2px;
+            float: right;
+            max-width: 300px;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .image-card.left {
+            float: left;
+            margin-right: 20px;
+            margin-left: 0;
+        }
+
+        .image-card.center {
+            float: none;
+            margin: 20px auto;
+            display: block;
+        }
+
+	.image-card.big {
+	   float: none;
+	   max-width: 100%;
+	   margin: 20px 0;
+	   display: block;
+	}
+        .image-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .image-card .caption {
+            font-size: 12px;
+            line-height: 1.4;
+            color: var(--text-color);
+            text-align: left;
+            margin: 0;
+        }
+
+        .image-card .caption strong {
+            font-weight: bold;
+        }
+
+        /* Clear floats after image cards */
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Responsive image cards */
+        @media (max-width: 768px) {
+            .image-card {
+                float: none !important;
+                max-width: 100%;
+                margin: 15px 0;
+            }
+        }
+
+        /* Author info */
+        .author-info {
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            margin-top: 40px;
+            font-size: 13px;
+            clear: both;
+        }
+
+        /* Hidden content for language switching */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 15px 10px;
+                max-width: 100vw;
+                overflow-x: hidden;
+            }
+
+            .sidebar {
+                position: relative;
+                top: auto;
+                order: -1;
+                flex-direction: row;
+                gap: 10px;
+            }
+
+            .page-icon {
+                flex: 0 0 auto;
+                min-width: 80px;
+            }
+
+            .toc {
+                flex: 1;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .nav-title {
+                font-size: 20px;
+            }
+
+            .content h1 {
+                font-size: 24px;
+            }
+
+            .content h2 {
+                font-size: 18px;
+            }
+
+            .content {
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+
+            .content p, .content li, .content blockquote {
+                overflow-wrap: break-word;
+                word-wrap: break-word;
+                hyphens: auto;
+            }
+
+            pre {
+                font-size: 10px;
+                overflow-x: auto;
+                white-space: pre;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 13px;
+            }
+
+            .container {
+                padding: 10px 8px;
+                max-width: 100vw;
+                overflow-x: hidden;
+            }
+
+            .content h1 {
+                font-size: 20px;
+            }
+
+            .content h2 {
+                font-size: 16px;
+            }
+
+            .content {
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+
+            .info-box, .metadata {
+                padding: 10px;
+                margin: 15px 0;
+            }
+
+            pre {
+                padding: 10px;
+                font-size: 10px;
+            }
+        }
+
+        /* Shader canvas */
+        .shader-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.8;
+        }
+
+        /* Hide shader on small screens */
+        @media (max-width: 768px) {
+            .shader-canvas {
+                display: none;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .header, .nav-container, .toc, .shader-canvas {
+                display: none;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+                max-width: none;
+            }
+
+            body {
+                color: #000;
+                background: #fff;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- WebGL Shader Canvas -->
+    <canvas class="shader-canvas" id="shaderCanvas"></canvas>
+    
+    <header class="header">
+        <div class="header-content">
+            <a href="https://karen-pal.github.io/about" class="home-link">← Karen Palacio</a>
+            <div class="header-controls">
+                <select class="lang-selector" onchange="switchLanguage(this.value)">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                </select>
+                <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav-container">
+        <div class="nav-content">
+            <h1 class="nav-title">COGWAR REPORT</h1>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside class="sidebar">
+            <!-- Page icon (like Wikipedia) -->
+            <div class="page-icon">
+                <div class="icon-placeholder">🧠</div>
+            </div>
+            
+            <!-- Table of Contents -->
+            <div class="toc">
+                <h3 class="lang-content es active">Contenido</h3>
+                <h3 class="lang-content en">Contents</h3>
+                <ul class="lang-content es active">
+                    <li><a href="#resumen-ejecutivo">Resumen Ejecutivo</a></li>
+                    <li><a href="#contexto-tecnico">Contexto Técnico & Motivación</a></li>
+                    <li class="toc-level-2"><a href="#naturaleza-psicologica">Naturaleza Psicológica de la Disuasión</a></li>
+                    <li class="toc-level-2"><a href="#dominio-nuclear-cognitivo">De lo Nuclear a lo Cognitivo</a></li>
+                    <li class="toc-level-2"><a href="#vulnerabilidad-argentina">Vulnerabilidad Argentina</a></li>
+                    <li><a href="#desarrollo-datasets">Desarrollo de Datasets</a></li>
+                    <li class="toc-level-2"><a href="#corpus-personalizado">Creación de Corpus Personalizado</a></li>
+                    <li class="toc-level-2"><a href="#desafios-tecnicos">Desafíos Técnicos</a></li>
+                    <li><a href="#framework-analisis">Framework de Análisis Multidimensional</a></li>
+                    <li><a href="#hallazgos-clave">Hallazgos Clave & Innovaciones</a></li>
+                    <li><a href="#dilemas-criticos">Dilemas Críticos para Discusión</a></li>
+                    <li><a href="#especificaciones-tecnicas">Especificaciones Técnicas</a></li>
+                    <li><a href="#contexto-argentina">Contexto: Argentina como Laboratorio</a></li>
+                    <li><a href="#glosario">Glosario</a></li>
+                </ul>
+                <ul class="lang-content en">
+                    <li><a href="#executive-summary">Executive Summary</a></li>
+                    <li><a href="#technical-context">Technical Context & Motivation</a></li>
+                    <li class="toc-level-2"><a href="#psychological-nature">Psychological Nature of Deterrence</a></li>
+                    <li class="toc-level-2"><a href="#nuclear-cognitive">From Nuclear to Cognitive Domains</a></li>
+                    <li class="toc-level-2"><a href="#argentina-vulnerability">Argentina's Vulnerability</a></li>
+                    <li><a href="#dataset-development">Dataset Development</a></li>
+                    <li class="toc-level-2"><a href="#custom-corpus">Custom Corpus Creation</a></li>
+                    <li class="toc-level-2"><a href="#technical-challenges">Technical Challenges</a></li>
+                    <li><a href="#analysis-framework">Multi-Dimensional Analysis Framework</a></li>
+                    <li><a href="#key-findings">Key Findings & Innovations</a></li>
+                    <li><a href="#critical-dilemmas">Critical Dilemmas for Discussion</a></li>
+                    <li><a href="#technical-specs">Technical Specifications</a></li>
+                    <li><a href="#argentina-context">Background: Argentina as Laboratory</a></li>
+                    <li><a href="#glossary">Glossary</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="content">
+            <!-- Spanish Content -->
+            <div class="lang-content es active">
+                <h1>COGWAR REPORT</h1>
+                <div class="metadata">
+                    <p><strong>Análisis de Discursos Impulsado por IA para la Detección de Guerra Cognitiva</strong></p>
+                    <p><strong>Material de Lectura para RealML Workshop 2025</strong></p>
+                    <p><strong>Karen Palacio</strong><br>
+                    Desarrolladora de IA & Artista Digital Interdisciplinaria<br>
+                    Córdoba, Argentina</p>
+                </div>
+
+                <h2 id="resumen-ejecutivo">Resumen Ejecutivo</h2>
+                <div class="info-box">
+                    <p><strong>Problema</strong>: Aunque la OTAN formalizó recientemente la "guerra cognitiva" (2023), la última dictadura militar argentina (1976-1983) proporciona un precedente anterior a través de operaciones psicológicas bajo el Plan Cóndor orquestado por EE.UU. Hoy, estas técnicas se están redistribuyendo en el discurso político argentino, weaponizando el trauma colectivo y normalizando ideologías autoritarias.</p>
+                    
+                    <p><strong>Metodología</strong>: COGWAR REPORT integra NLP, LLMs fine-tuneados y IA generativa para crear un framework de análisis multidimensional que detecta tácticas de guerra cognitiva en discursos políticos. El proyecto incluye datasets personalizados de fuentes oficiales (OTAN, RAND, inteligencia desclasificada) y desarrolla contramedidas digitales especulativas.</p>
+                    
+                    <p><strong>Innovación Clave</strong>: Un framework integral que analiza manipulación emocional, pensamiento binario, enmarcado geopolítico y violencia simbólica en discursos políticos en español, mientras explora cómo diferentes modelos de IA (Meta vs. DeepSeek) producen interpretaciones divergentes basadas en sus orígenes geopolíticos.</p>
+                    
+                    <p><strong>Desafío Crítico</strong>: El dilema ético de liberar esto como herramienta OSINT versus el riesgo de habilitar ataques de guerra cognitiva más sofisticados.</p>
+                </div>
+
+                <h2 id="contexto-tecnico">Contexto Técnico & Motivación</h2>
+
+                <h3 id="naturaleza-psicologica">La Naturaleza Psicológica de la Disuasión</h3>
+                <p>Mi investigación comenzó estudiando la <strong>teoría de disuasión militar</strong>: la disuasión tiene éxito cuando un actor se abstiene de actuar debido a la convicción interna de que 1) no puede ganar o 2) podría ganar pero las consecuencias serían demasiado destructivas. El actor disuadido pierde sin luchar, mientras que su oponente gana sin levantar un dedo.</p>
+
+                <p>Lo que más me fascinó de la disuasión es su carácter profundamente psicológico. Tu enemigo debe <em>creer</em> que tus amenazas y demostraciones de poder son reales para que la disuasión tome efecto. Esta dimensión psicológica se vuelve central para entender la guerra cognitiva.</p>
+
+                <h3 id="dominio-nuclear-cognitivo">De los Dominios Nucleares a los Cognitivos</h3>
+                <p>Post-Guerra Fría, EE.UU. pasó de la unipolaridad nuclear a un mundo multipolar con alianzas frágiles. Incapaz de mantener las ventajas del "Principio de Primer Ataque", la doctrina militar se expandió a nuevos dominios—incluyendo el dominio cognitivo formalizado por la OTAN en 2023.</p>
+
+                <h3 id="vulnerabilidad-argentina">Vulnerabilidad de Argentina</h3>
+                <p>Argentina enfrenta una vulnerabilidad específica: nuestra gran herida abierta de la dictadura 1976-1983. Mientras procesamos a líderes militares, los colaboradores civiles nunca fueron responsabilizados. Hoy, el discurso político weaponiza este trauma, reactivando el miedo a la política, el miedo al conocimiento y la paranoia individualista necesaria para sobrevivir a una dictadura genocida.</p>
+
+                <h2 id="desarrollo-datasets">Desarrollo de Datasets y Desafíos</h2>
+
+                <h3 id="corpus-personalizado">Creación de Corpus Personalizado</h3>
+                <p>Trabajar con NLP en español requiere construir todo desde cero. El proyecto involucra generación constante de datasets:</p>
+
+                <ol>
+                    <li><strong>Base de Conocimiento de Guerra Cognitiva</strong>: 29 pares Q&A (9,879 palabras) de fuentes oficiales OTAN/RAND</li>
+                    <li><strong>Discursos Políticos Argentinos</strong>: Transcritos de discursos en vivo vía sitio web Casa Rosada</li>
+                    <li><strong>Archivo Plan Cóndor</strong>: Colección personal convertida vía OCR y transcripción manual</li>
+                    <li><strong>Contramedidas Especulativas</strong>: Sigilos protectores y contra-discursos generados por IA</li>
+                </ol>
+
+                <h3 id="desafios-tecnicos">Desafíos Técnicos con Discurso Político Español</h3>
+                <p>Los discursos políticos argentinos presentan desafíos únicos de NLP:</p>
+                <ul>
+                    <li><strong>Sintaxis fragmentada</strong>: Transcripciones en vivo con oraciones incompletas, digresiones, errores gramaticales</li>
+                    <li><strong>Densidad semántica</strong>: Uso intenso de sarcasmo, ironía, referencias históricas que requieren conocimiento contextual profundo</li>
+                    <li><strong>Variaciones dialectales</strong>: Español rioplatense mezclado con terminología técnica</li>
+                </ul>
+
+                <div class="info-box">
+                    <h4>Ejemplo de estructura problemática:</h4>
+                    <pre><code>"A su vez, el ministro de Desregulación continúa su maratón, bajando cada día más el costo argentino, volviéndonos más competitivos a cada segundo, lo cual también redundará en un aumento de la productividad para todos los sectores de la economía, acrecentando todo lo que ya mencioné antes."</code></pre>
+                </div>
+
+                <h3>Problemas de Rendimiento de Modelos</h3>
+                <p>Tanto los LLMs Meta fine-tuneados como DeepSeek mostraron limitaciones críticas:</p>
+                <ul>
+                    <li><strong>Caer en propaganda</strong>: Al analizar tácticas de guerra cognitiva, los modelos reproducían las mismas tácticas que debían identificar</li>
+                    <li><strong>Inconsistencias estructurales</strong>: Dificultad para mantener formatos JSON solicitados, alucinando campos nuevos, cambiando idiomas mid-análisis</li>
+                    <li><strong>Ceguera contextual</strong>: Incapacidad para interpretar manipulación obvia (ej., crear enemigos internos ficticios de incidentes menores)</li>
+                </ul>
+
+                <p>Los modelos Claude pagos funcionaron significativamente mejor, planteando preguntas sobre la democratización de capacidades analíticas.</p>
+
+                <h2 id="framework-analisis">Framework de Análisis Multidimensional</h2>
+
+                <h3>Componentes Analíticos Centrales</h3>
+
+                <h4>1. Análisis de Manipulación Emocional</h4>
+                <p>Distingue entre emociones expresadas y emociones objetivo para diferentes audiencias:</p>
+
+                <pre><code>{
+  "emotions": {
+    "expressed": ["joy", "pride", "contempt", "outrage"],
+    "targeted": {
+      "in_group": ["pride", "fear", "righteous_anger"], 
+      "out_group": ["shame", "guilt", "fear"]
+    }
+  }
+}</code></pre>
+
+                <h4>2. Detección de Enmarcado Binario</h4>
+                <p>Identifica cómo temas complejos se reducen a decisiones stark que eliminan matices:</p>
+
+                <pre><code>{
+  "binarisms": [
+    {
+      "positive_pole": "Western values",
+      "negative_pole": "Woke ideology", 
+      "context": "Civilization framework",
+      "intensity": 0.7
+    }
+  ]
+}</code></pre>
+
+                <h4>3. Reposicionamiento Geopolítico</h4>
+                <p>Rastrea cómo los oradores manipulan referencias espaciales/temporales para reconfigurar la identidad nacional:</p>
+
+                <pre><code>{
+  "geopolitical_framing": {
+    "spatial_references": ["West", "Europe", "Argentina", "USA"],
+    "historical_periods": ["Greco-Roman", "Judeo-Christian"],
+    "positioning": "Western supremacist",
+    "revisionism_type": "Colonial apologism"
+  }
+}</code></pre>
+
+                <h4>4. Extracción de Violencia Simbólica</h4>
+                <p>Captura símbolos que evitan el pensamiento racional y se incrustan directamente en el subconsciente:</p>
+                <ul>
+                    <li>Símbolos arquetípicos (patrones psicológicos universales)</li>
+                    <li>Símbolos culturales específicos de Argentina</li>
+                    <li>Desencadenantes de respuestas viscerales</li>
+                </ul>
+
+                <h3>Visualización de Espacio Semántico</h3>
+                <p>Sistema de graficación semántica 3D desarrollado que:</p>
+                <ul>
+                    <li>Mapea relaciones conceptuales a través de múltiples textos</li>
+                    <li>Mantiene espacio semántico interpretable a través español-inglés</li>
+                    <li>Permite comparación visual entre diferentes sistemas de discurso</li>
+                    <li>Habilita identificación rápida de patrones de agrupación conceptual</li>
+                </ul>
+
+                <h2 id="hallazgos-clave">Hallazgos Clave & Innovaciones</h2>
+
+                <h3>Amuletos Algorítmicos como Resistencia</h3>
+                <p>Cuando se empuja a alucinar, DeepSeek genera sigilos protectores mezclando múltiples idiomas:</p>
+
+                <pre><code>Giochi - Italiano (juegos)
+进一步影刺 - Chino (sombras adicionales)  
+connaître - Francés (conocer)</code></pre>
+
+                <p>Este enfoque semántico hiperdenso sugiere resistencia especulativa a través del desbordamiento de significado.</p>
+
+                <h3>Sesgo Geopolítico en Análisis de IA</h3>
+                <p>Comparar modelos Meta (entrenados en EE.UU.) vs DeepSeek (entrenados en China) revela cómo los orígenes geopolíticos moldean la interpretación del mismo texto, agregando otra capa al análisis de guerra cognitiva.</p>
+
+                <h3>Detección de Weaponización Sistemática de Trauma</h3>
+                <p>El framework identifica exitosamente cómo las referencias a la dictadura argentina se despliegan para:</p>
+                <ul>
+                    <li>Reactivar trauma colectivo</li>
+                    <li>Justificar medidas autoritarias como "defensa necesaria"</li>
+                    <li>Crear falsas equivalencias entre democracia y terror estatal</li>
+                </ul>
+
+                <h2 id="dilemas-criticos">Dilemas Críticos para Discusión en Workshop</h2>
+
+                <h3>1. Liberación OSINT vs. Uso Malicioso</h3>
+                <div class="info-box">
+                    <p><strong>El Problema</strong>: Inicialmente planeé liberar esto como herramienta de inteligencia de código abierto—una interfaz web donde usuarios ingresan texto y reciben visualizaciones interactivas de dimensiones de guerra cognitiva.</p>
+                    
+                    <p><strong>El Riesgo</strong>: El mismo framework podría usarse inversamente para planificar y optimizar estrategias de guerra cognitiva. Cada dataset, modelo y técnica de visualización podría servir a actores maliciosos.</p>
+                    
+                    <p><strong>Preguntas para Discusión</strong>:</p>
+                    <ul>
+                        <li>¿Cómo equilibramos transparencia con seguridad?</li>
+                        <li>¿Qué salvaguardas existen para investigación de doble uso en seguridad cognitiva?</li>
+                        <li>¿Es posible crear herramientas ciudadanas sin habilitar actores estatales?</li>
+                    </ul>
+                </div>
+
+                <h3>2. Soberanía Computacional vs. Rendimiento</h3>
+                <div class="info-box">
+                    <p><strong>La Tensión</strong>: Modelos gratuitos/abiertos (ejecutándose en infraestructura computacional nacional argentina) funcionan pobremente comparado con modelos propietarios (Claude, GPT-4) que pueden estar alojados en cualquier lugar.</p>
+                    
+                    <p><strong>Implicaciones</strong>:</p>
+                    <ul>
+                        <li>Calidad técnica vs. soberanía de datos</li>
+                        <li>Acceso democrático vs. capacidad analítica</li>
+                        <li>Desarrollo de infraestructura nacional vs. efectividad inmediata</li>
+                    </ul>
+                </div>
+
+                <h3>3. Desafíos Metodológicos con NLP en Español</h3>
+                <div class="info-box">
+                    <p><strong>Problemas Centrales</strong>:</p>
+                    <ul>
+                        <li>Datos de entrenamiento limitados en español para dominios especializados</li>
+                        <li>Requisitos de contexto cultural para análisis preciso</li>
+                        <li>Variaciones dialectales que confunden modelos generales</li>
+                    </ul>
+                    
+                    <p><strong>Preguntas</strong>:</p>
+                    <ul>
+                        <li>¿Cómo podemos desarrollar NLP robusto en español para seguridad cognitiva?</li>
+                        <li>¿Qué enfoques colaborativos podrían abordar brechas de idiomas minoritarios?</li>
+                        <li>¿Cómo manejamos el costo computacional del desarrollo de modelos personalizados?</li>
+                    </ul>
+                </div>
+
+                <h3>4. Marco Ético para Defensa Cognitiva</h3>
+                <div class="info-box">
+                    <p><strong>Preguntas Fundamentales</strong>:</p>
+                    <ul>
+                        <li>¿Quién determina qué constituye "guerra cognitiva"?</li>
+                        <li>¿Cómo evitamos reproducir las mismas tácticas de manipulación que intentamos detectar?</li>
+                        <li>¿Qué papel deberían jugar artistas/investigadores en seguridad cognitiva?</li>
+                    </ul>
+                </div>
+
+                <h2 id="especificaciones-tecnicas">Especificaciones Técnicas para Workshop</h2>
+
+                <h3>Arquitectura Actual del Sistema</h3>
+                <ul>
+                    <li><strong>Modelos Base</strong>: LLaMA 3 (fine-tuned), DeepSeek R1, Claude (para comparación)</li>
+                    <li><strong>Pipeline de Análisis</strong>: Procesamiento multi-pasada con validación de salida estructurada</li>
+                    <li><strong>Visualización</strong>: Three.js para espacios semánticos 3D, interfaces personalizadas para análisis temporal</li>
+                    <li><strong>Infraestructura</strong>: Sistema Nacional de Computación de Alto Desempeño (Argentina)</li>
+                </ul>
+
+                <h3>Resultados Deseados del Workshop</h3>
+                <ol>
+                    <li><strong>Refinamiento Metodológico</strong>: Enfoques ML alternativos para detectar patrones de guerra cognitiva en español</li>
+                    <li><strong>Desarrollo de Marco Ético</strong>: Guías para investigación responsable en seguridad cognitiva</li>
+                    <li><strong>Mentoría Técnica</strong>: Orientación NLP especializada para discurso político fragmentado</li>
+                    <li><strong>Salvaguardas Comunitarias</strong>: Estrategias para prevenir reaprovechamiento malicioso de herramientas analíticas</li>
+                </ol>
+
+                <h3>Capacidades de Demostración</h3>
+                <p>Puedo presentar demostraciones en vivo de:</p>
+                <ul>
+                    <li>Generación de espacio semántico en tiempo real desde texto de entrada</li>
+                    <li>Visualización interactiva de dimensiones de guerra cognitiva</li>
+                    <li>Comparación entre interpretaciones de diferentes modelos de IA</li>
+                    <li>Sistema de generación de sigilos ASCII</li>
+                </ul>
+
+                <h2 id="contexto-argentina">Contexto: Argentina como Laboratorio de Guerra Cognitiva</h2>
+                <p>El Plan Cóndor (1975-1983) no fue solo represión física—fue un laboratorio para ingeniería social que instaló categorías de pensamiento, miedos y formas de naturalizar la violencia política que continúan operando hoy. Entender este precedente histórico es crucial para reconocer el despliegue contemporáneo de guerra cognitiva.</p>
+
+                <div class="info-box">
+                    <h4>Contexto Histórico Clave:</h4>
+                    <ul>
+                        <li>Operaciones psicológicas sistemáticas coordinadas a través de Sudamérica</li>
+                        <li>Colaboración civil en implantación ideológica</li>
+                        <li>Efectos a largo plazo en subjetividad política y participación democrática</li>
+                        <li>Técnicas documentadas en archivos CIA desclasificados</li>
+                    </ul>
+                </div>
+
+                <p>Esta profundidad histórica proporciona perspectiva analítica única no disponible en países sin precedentes similares de guerra cognitiva documentada.</p>
+
+                <h2 id="glosario">Glosario</h2>
+
+                <h3>Plan Cóndor (Operación Cóndor)</h3>
+                <p>Una operación coordinada de inteligencia y represión que funcionó entre 1975-1983, implementada por las dictaduras militares del Cono Sur (Argentina, Chile, Uruguay, Paraguay, Bolivia y Brasil) con apoyo logístico, financiero y doctrinario, coordinación y dirección de Estados Unidos.</p>
+
+                <p>Más allá de la coordinación para perseguir, secuestrar y asesinar masivamente opositores políticos a través de fronteras, el Plan Cóndor incluyó un componente sistemático de guerra psicológica y operaciones de propaganda diseñadas para fragmentar el tejido social, instalar narrativas que justificaran el terror estatal y reconfigurar las subjetividades políticas de poblaciones enteras.</p>
+
+                <h3>Guerra Cognitiva (Definición OTAN, 2023)</h3>
+                <div class="info-box">
+                    <p><strong>Definición Oficial OTAN</strong>: "El dominio cognitivo abarca la mente y la forma en que el conocimiento, entendimiento y comprensión afectan la toma de decisiones. La guerra cognitiva busca cambiar no solo lo que la gente piensa, sino también cómo piensa y cómo actúa."</p>
+                    
+                    <p><strong>Características Operacionales</strong> (NATO Allied Command Transformation, 2023):</p>
+                    <blockquote>"Ataques sincronizados y coordinados a emociones, pensamientos y comportamientos afectan la voluntad, moral, toma de decisiones y comprensión de la realidad. Los ataques cognitivos están diseñados para usar información para activar procesos subconscientes de nuestro cerebro, haciendo difícil para nuestra mente consciente percibir la presencia de una amenaza cognitiva."</blockquote>
+                </div>
+
+                <p><strong>Distinción Clave</strong>: A diferencia de la guerra de información (que apunta a lo que la gente piensa), la guerra cognitiva apunta a <em>cómo</em> la gente piensa, operando por debajo de la conciencia para alterar procesos cognitivos, respuestas emocionales y patrones de toma de decisiones.</p>
+
+                <div class="author-info">
+                    <p><strong>Estado del Proyecto</strong>: Desarrollo activo, buscando refinamiento colaborativo y desarrollo de marco ético a través del compromiso de la comunidad RealML.</p>
+                    <p><strong>Karen Palacio</strong><br>
+                    Córdoba, Argentina<br>
+                    <a href="https://instagram.com/kardaver">Instagram: @kardaver</a><br>
+                    <a href="https://www.youtube.com/@karenpalacio">YouTube: Karen Palacio</a></p>
+                </div>
+            </div>
+
+            <!-- English Content -->
+            <div class="lang-content en">
+                <h1>COGWAR REPORT</h1>
+                <div class="metadata">
+                    <p><strong>AI-Driven Discourse Analysis for Cognitive Warfare Detection</strong></p>
+                    <p><strong>Reading Material for RealML Workshop 2025</strong></p>
+                    <p><strong>Karen Palacio</strong><br>
+                    AI Developer & Interdisciplinary Digital Artist<br>
+                    Córdoba, Argentina</p>
+                </div>
+
+                <h2 id="executive-summary">Executive Summary</h2>
+                <div class="info-box">
+                    <p><strong>Problem</strong>: While NATO only recently formalized "cognitive warfare" (2023), Argentina's last military dictatorship (1976-1983) provides an earlier precedent through psychological operations under the U.S.-orchestrated Plan Condor. Today, these techniques are being redeployed in Argentine political discourse, weaponizing collective trauma and normalizing authoritarian ideologies.</p>
+                    
+                    <p><strong>Methodology</strong>: COGWAR REPORT integrates NLP, fine-tuned LLMs, and generative AI to create a multi-dimensional analysis framework that detects cognitive warfare tactics in political speeches. The project includes custom datasets from official sources (NATO, RAND, declassified intelligence) and develops speculative digital countermeasures.</p>
+                    
+                    <p><strong>Key Innovation</strong>: A comprehensive framework that analyzes emotional manipulation, binary thinking, geopolitical framing, and symbolic violence in Spanish-language political discourse, while exploring how different AI models (Meta vs. DeepSeek) produce divergent interpretations based on their geopolitical origins.</p>
+                    
+                    <p><strong>Critical Challenge</strong>: The ethical dilemma of releasing this as an OSINT tool versus the risk of enabling more sophisticated cognitive warfare attacks.</p>
+                </div>
+
+                <h2 id="technical-context">Technical Context & Motivation</h2>
+
+                <h3 id="psychological-nature">The Psychological Nature of Deterrence</h3>
+                <p>My research began with studying military <strong>deterrence theory</strong>: deterrence succeeds when an actor refrains from action due to internal conviction that they either 1) cannot win or 2) could win but consequences would be too destructive. The deterred actor loses without fighting, while their opponent wins without lifting a finger.</p>
+
+                <p>What fascinated me most about deterrence is its profoundly psychological character. Your enemy must <em>believe</em> your threats and power displays are real for deterrence to take effect. This psychological dimension becomes central to understanding cognitive warfare.</p>
+
+                <h3 id="nuclear-cognitive">From Nuclear to Cognitive Domains</h3>
+                <p>Post-Cold War, the U.S. shifted from nuclear unipolarity to a multipolar world with fragile alliances. Unable to maintain "First Strike Principle" advantages, military doctrine expanded to new domains—including the cognitive domain formalized by NATO in 2023.</p>
+
+                <h3 id="argentina-vulnerability">Argentina's Vulnerability</h3>
+                <p>Argentina faces a specific vulnerability: our unhealed wound from the 1976-1983 dictatorship. While we prosecuted military leaders, civilian collaborators were never held accountable. Today, political discourse weaponizes this trauma, reactivating fear of politics, fear of knowledge, and individualistic paranoia necessary for surviving genocidal dictatorship.</p>
+
+                <h2 id="dataset-development">Dataset Development & Challenges</h2>
+
+                <h3 id="custom-corpus">Custom Corpus Creation</h3>
+                <p>Working with Spanish NLP requires building everything from scratch. The project involves constant dataset generation:</p>
+
+                <ol>
+                    <li><strong>Cognitive Warfare Knowledge Base</strong>: 29 Q&A pairs (9,879 words) from official NATO/RAND sources</li>
+                    <li><strong>Argentine Political Speeches</strong>: Transcribed from live addresses via Casa Rosada website</li>
+                    <li><strong>Plan Condor Archive</strong>: Personal collection converted via OCR and manual transcription</li>
+                    <li><strong>Speculative Countermeasures</strong>: AI-generated protective sigils and counter-discourse</li>
+                </ol>
+
+                <h3 id="technical-challenges">Technical Challenges with Spanish Political Discourse</h3>
+                <p>Argentine political speeches present unique NLP challenges:</p>
+                <ul>
+                    <li><strong>Fragmented syntax</strong>: Live transcriptions with incomplete sentences, digressions, grammatical errors</li>
+                    <li><strong>Semantic density</strong>: Heavy use of sarcasm, irony, historical references requiring deep contextual knowledge</li>
+                    <li><strong>Dialectal variations</strong>: Rioplatense Spanish mixed with technical terminology</li>
+                </ul>
+
+                <div class="info-box">
+                    <h4>Example of problematic structure:</h4>
+                    <pre><code>"A su vez, el ministro de Desregulación continúa su maratón, bajando cada día más el costo argentino, volviéndonos más competitivos a cada segundo, lo cual también redundará en un aumento de la productividad para todos los sectores de la economía, acrecentando todo lo que ya mencioné antes."</code></pre>
+                </div>
+
+                <h3>Model Performance Issues</h3>
+                <p>Both fine-tuned Meta LLMs and DeepSeek showed critical limitations:</p>
+                <ul>
+                    <li><strong>Falling into propaganda</strong>: When analyzing cognitive warfare tactics, models would reproduce the same tactics they were meant to identify</li>
+                    <li><strong>Structural inconsistencies</strong>: Difficulty maintaining requested JSON formats, hallucinating new fields, switching languages mid-analysis</li>
+                    <li><strong>Context blindness</strong>: Unable to interpret obvious manipulation (e.g., creating fictional internal enemies from minor incidents)</li>
+                </ul>
+
+                <p>Paid Claude models performed significantly better, raising questions about democratization of analytical capabilities.</p>
+
+                <h2 id="analysis-framework">Multi-Dimensional Analysis Framework</h2>
+
+                <h3>Core Analytical Components</h3>
+
+                <h4>1. Emotional Manipulation Analysis</h4>
+                <p>Distinguishes between expressed emotions and targeted emotions for different audiences:</p>
+
+                <pre><code>{
+  "emotions": {
+    "expressed": ["joy", "pride", "contempt", "outrage"],
+    "targeted": {
+      "in_group": ["pride", "fear", "righteous_anger"], 
+      "out_group": ["shame", "guilt", "fear"]
+    }
+  }
+}</code></pre>
+
+                <h4>2. Binary Framing Detection</h4>
+                <p>Identifies how complex issues are reduced to stark choices that eliminate nuance:</p>
+
+                <pre><code>{
+  "binarisms": [
+    {
+      "positive_pole": "Western values",
+      "negative_pole": "Woke ideology", 
+      "context": "Civilization framework",
+      "intensity": 0.7
+    }
+  ]
+}</code></pre>
+
+                <h4>3. Geopolitical Repositioning</h4>
+                <p>Tracks how speakers manipulate spatial/temporal references to reconfigure national identity:</p>
+
+                <pre><code>{
+  "geopolitical_framing": {
+    "spatial_references": ["West", "Europe", "Argentina", "USA"],
+    "historical_periods": ["Greco-Roman", "Judeo-Christian"],
+    "positioning": "Western supremacist",
+    "revisionism_type": "Colonial apologism"
+  }
+}</code></pre>
+
+                <h4>4. Symbolic Violence Extraction</h4>
+                <p>Captures symbols that bypass rational thought and embed directly in the subconscious:</p>
+                <ul>
+                    <li>Archetypal symbols (universal psychological patterns)</li>
+                    <li>Argentina-specific cultural symbols</li>
+                    <li>Visceral response triggers</li>
+                </ul>
+
+                <h3>Semantic Space Visualization</h3>
+                <p>Developed 3D semantic graphing system that:</p>
+                <ul>
+                    <li>Maps conceptual relationships across multiple texts</li>
+                    <li>Maintains interpretable semantic space across Spanish-English</li>
+                    <li>Allows visual comparison between different discourse systems</li>
+                    <li>Enables rapid identification of conceptual clustering patterns</li>
+                </ul>
+
+                <h2 id="key-findings">Key Findings & Innovations</h2>
+
+                <h3>Algorithmic Amulets as Resistance</h3>
+                <p>When pushed to hallucinate, DeepSeek generates protective sigils against cognitive warfare mixing multiple languages:</p>
+
+                <pre><code>Giochi - Italian (games)
+进一步影刺 - Chinese (further shadows)  
+connaître - French (to know)</code></pre>
+
+                <p>This hyperdense semantic approach suggests speculative resistance through meaning overflow.</p>
+
+                <h3>Geopolitical Bias in AI Analysis</h3>
+                <p>Comparing Meta (U.S.-trained) vs DeepSeek (China-trained) models reveals how geopolitical origins shape interpretation of the same text, adding another layer to cognitive warfare analysis.</p>
+
+                <h3>Detection of Systematic Trauma Weaponization</h3>
+                <p>The framework successfully identifies how references to Argentina's dictatorship are deployed to:</p>
+                <ul>
+                    <li>Reactivate collective trauma</li>
+                    <li>Justify authoritarian measures as "necessary defense"</li>
+                    <li>Create false equivalencies between democracy and state terror</li>
+                </ul>
+
+                <h2 id="critical-dilemmas">Critical Dilemmas for Workshop Discussion</h2>
+
+                <h3>1. OSINT Release vs. Malicious Use</h3>
+                <div class="info-box">
+                    <p><strong>The Problem</strong>: I initially planned to release this as an open-source intelligence tool—a web interface where users input text and receive interactive visualizations of cognitive warfare dimensions.</p>
+                    
+                    <p><strong>The Risk</strong>: The same framework could be used inversely to plan and optimize cognitive warfare strategies. Every dataset, model, and visualization technique could serve malicious actors.</p>
+                    
+                    <p><strong>Questions for Discussion</strong>:</p>
+                    <ul>
+                        <li>How do we balance transparency with security?</li>
+                        <li>What safeguards exist for dual-use research in cognitive security?</li>
+                        <li>Is it possible to create citizen-facing tools without enabling state actors?</li>
+                    </ul>
+                </div>
+
+                <h3>2. Computational Sovereignty vs. Performance</h3>
+                <div class="info-box">
+                    <p><strong>The Tension</strong>: Free/open models (running on Argentina's national computing infrastructure) perform poorly compared to proprietary models (Claude, GPT-4) that may be hosted anywhere.</p>
+                    
+                    <p><strong>Implications</strong>:</p>
+                    <ul>
+                        <li>Technical quality vs. data sovereignty</li>
+                        <li>Democratic access vs. analytical capability</li>
+                        <li>National infrastructure development vs. immediate effectiveness</li>
+                    </ul>
+                </div>
+
+                <h3>3. Methodological Challenges with Spanish NLP</h3>
+                <div class="info-box">
+                    <p><strong>Core Issues</strong>:</p>
+                    <ul>
+                        <li>Limited Spanish-language training data for specialized domains</li>
+                        <li>Cultural context requirements for accurate analysis</li>
+                        <li>Dialectal variations that confuse general models</li>
+                    </ul>
+                    
+                    <p><strong>Questions</strong>:</p>
+                    <ul>
+                        <li>How can we develop robust Spanish NLP for cognitive security?</li>
+                        <li>What collaborative approaches could address minority language gaps?</li>
+                        <li>How do we handle the computational cost of custom model development?</li>
+                    </ul>
+                </div>
+
+                <h3>4. Ethical Framework for Cognitive Defense</h3>
+                <div class="info-box">
+                    <p><strong>Fundamental Questions</strong>:</p>
+                    <ul>
+                        <li>Who determines what constitutes "cognitive warfare"?</li>
+                        <li>How do we avoid reproducing the same manipulation tactics we're trying to detect?</li>
+                        <li>What role should artists/researchers play in cognitive security?</li>
+                    </ul>
+                </div>
+
+                <h2 id="technical-specs">Technical Specifications for Workshop</h2>
+
+                <h3>Current System Architecture</h3>
+                <ul>
+                    <li><strong>Base Models</strong>: LLaMA 3 (fine-tuned), DeepSeek R1, Claude (for comparison)</li>
+                    <li><strong>Analysis Pipeline</strong>: Multi-pass processing with structured output validation</li>
+                    <li><strong>Visualization</strong>: Three.js for 3D semantic spaces, custom interfaces for temporal analysis</li>
+                    <li><strong>Infrastructure</strong>: Sistema Nacional de Computación de Alto Desempeño (Argentina)</li>
+                </ul>
+
+                <h3>Desired Workshop Outcomes</h3>
+                <ol>
+                    <li><strong>Methodological Refinement</strong>: Alternative ML approaches for detecting cognitive warfare patterns in Spanish</li>
+                    <li><strong>Ethical Framework Development</strong>: Guidelines for responsible research in cognitive security</li>
+                    <li><strong>Technical Mentorship</strong>: Specialized NLP guidance for fragmented political discourse</li>
+                    <li><strong>Community Safeguards</strong>: Strategies for preventing malicious repurposing of analytical tools</li>
+                </ol>
+
+                <h3>Demonstration Capabilities</h3>
+                <p>I can present live demonstrations of:</p>
+                <ul>
+                    <li>Real-time semantic space generation from input text</li>
+                    <li>Interactive visualization of cognitive warfare dimensions</li>
+                    <li>Comparison between different AI model interpretations</li>
+                    <li>ASCII sigil generation system</li>
+                </ul>
+
+                <h2 id="argentina-context">Background: Argentina as Cognitive Warfare Laboratory</h2>
+                <p>The Plan Condor (1975-1983) wasn't just physical repression—it was a laboratory for social engineering that installed thought categories, fears, and ways of naturalizing political violence that continue operating today. Understanding this historical precedent is crucial for recognizing contemporary cognitive warfare deployment.</p>
+
+                <div class="info-box">
+                    <h4>Key Historical Context:</h4>
+                    <ul>
+                        <li>Systematic psychological operations coordinated across South America</li>
+                        <li>Civilian collaboration in ideological implantation</li>
+                        <li>Long-term effects on political subjectivity and democratic participation</li>
+                        <li>Documented techniques in declassified CIA archives</li>
+                    </ul>
+                </div>
+
+                <p>This historical depth provides unique analytical perspective unavailable in countries without similar documented cognitive warfare precedents.</p>
+
+                <h2 id="glossary">Glossary</h2>
+
+                <h3>Plan Cóndor (Operation Condor)</h3>
+                <p>A coordinated intelligence and repression operation that functioned between 1975-1983, implemented by the military dictatorships of the Southern Cone (Argentina, Chile, Uruguay, Paraguay, Bolivia, and Brazil) with logistical, financial, and doctrinal support, coordination, and direction from the United States.</p>
+
+                <p>Beyond coordination to pursue, kidnap, and massively murder political opponents across borders, Plan Cóndor included a systematic component of psychological warfare and propaganda operations designed to fragment social fabric, install narratives that justified state terror, and reconfigure the political subjectivities of entire populations.</p>
+
+                <h3>Cognitive Warfare (NATO Definition, 2023)</h3>
+                <div class="info-box">
+                    <p><strong>Official NATO Definition</strong>: "The cognitive domain encompasses the mind and the way knowledge, understanding, and comprehension affect decision-making. Cognitive warfare seeks to change not only what people think, but also how they think and how they act."</p>
+                    
+                    <p><strong>Operational Characteristics</strong> (NATO Allied Command Transformation, 2023):</p>
+                    <blockquote>"Synchronized and coordinated attacks on emotions, thoughts, and behaviors affect will, morale, decision-making, and understanding of reality. Cognitive attacks are designed to use information to activate our brain's subconscious processes, making it difficult for our conscious mind to perceive the presence of a cognitive threat."</blockquote>
+                </div>
+
+                <p><strong>Key Distinction</strong>: Unlike information warfare (which targets what people think), cognitive warfare targets <em>how</em> people think, operating below conscious awareness to alter cognitive processes, emotional responses, and decision-making patterns.</p>
+
+                <div class="author-info">
+                    <p><strong>Project Status</strong>: Active development, seeking collaborative refinement and ethical framework development through RealML community engagement.</p>
+                    <p><strong>Karen Palacio</strong><br>
+                    Córdoba, Argentina<br>
+                    <a href="https://instagram.com/kardaver">Instagram: @kardaver</a><br>
+                    <a href="https://www.youtube.com/@karenpalacio">YouTube: Karen Palacio</a></p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // WebGL Shader Setup (same as original)
+        function initShader() {
+            const canvas = document.getElementById('shaderCanvas');
+            if (!canvas) return;
+            
+            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            if (!gl) {
+                console.log('WebGL not supported, falling back to CSS');
+                return;
+            }
+
+            // Set canvas size to viewport
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                gl.viewport(0, 0, canvas.width, canvas.height);
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Vertex shader source
+            const vertexShaderSource = `
+                attribute vec2 a_position;
+                varying vec2 v_uv;
+                void main() {
+                    v_uv = a_position * 0.5 + 0.5;
+                    gl_Position = vec4(a_position, 0.0, 1.0);
+                }
+            `;
+
+            // Fragment shader source
+            const fragmentShaderSource = `
+                precision mediump float;
+                uniform float u_time;
+                uniform float u_isDark;
+                uniform vec2 u_resolution;
+                varying vec2 v_uv;
+
+                // Noise function
+                float random(vec2 st) {
+                    return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+                }
+
+                float noise(vec2 st) {
+                    vec2 i = floor(st);
+                    vec2 f = fract(st);
+                    float a = random(i);
+                    float b = random(i + vec2(1.0, 0.0));
+                    float c = random(i + vec2(0.0, 1.0));
+                    float d = random(i + vec2(1.0, 1.0));
+                    vec2 u = f * f * (3.0 - 2.0 * f);
+                    return mix(a, b, u.x) + (c - a)* u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+                }
+
+                float fbm(vec2 st) {
+                    float value = 0.0;
+                    float amplitude = 0.5;
+                    vec2 freq = st;
+                    for (int i = 0; i < 4; i++) {
+                        value += amplitude * noise(freq);
+                        freq *= 2.0;
+                        amplitude *= 0.5;
+                    }
+                    return value;
+                }
+
+                void main() {
+                    vec2 st = gl_FragCoord.xy / u_resolution.xy;
+                    
+                    // Create a falloff from top-right corner
+                    vec2 corner = vec2(1.0, 1.0);
+                    float distFromCorner = distance(st, corner);
+                    float cornerFalloff = 1.0 - smoothstep(0.0, 0.8, distFromCorner);
+                    
+                    // Also create subtle effects across the screen with stronger concentration on right side
+                    float rightSideBoost = smoothstep(0.3, 1.0, st.x);
+                    float topSideBoost = smoothstep(0.4, 1.0, st.y);
+                    float globalFalloff = (rightSideBoost * 0.7 + topSideBoost * 0.5) * 0.3;
+                    
+                    // Combine falloffs
+                    float totalFalloff = max(cornerFalloff, globalFalloff);
+                    
+                    if (totalFalloff < 0.01) {
+                        gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
+                        return;
+                    }
+                    
+                    // Create organic, flowing censored areas
+                    float t = u_time * 0.0008;
+                    
+                    // Scale coordinates for proper aspect ratio
+                    vec2 coord = st * vec2(u_resolution.x / u_resolution.y, 1.0);
+                    
+                    // Multiple organic blobs
+                    float blob1 = fbm(coord * 2.5 + vec2(t, t * 0.7));
+                    float blob2 = fbm(coord * 3.2 + vec2(t * 1.3, -t * 0.9));
+                    float blob3 = fbm(coord * 1.8 + vec2(-t * 0.6, t * 1.1));
+                    
+                    // Combine blobs with different intensities
+                    float pattern = blob1 * 0.6 + blob2 * 0.4 + blob3 * 0.3;
+                    
+                    // Create censored regions
+                    float censor1 = smoothstep(0.35, 0.75, pattern);
+                    float censor2 = smoothstep(0.4, 0.7, blob2);
+                    float censor3 = smoothstep(0.5, 0.85, blob3);
+                    
+                    float censored = max(max(censor1, censor2), censor3);
+                    
+                    // Add some glitch lines occasionally
+                    float glitch = step(0.985, random(vec2(floor(st.y * 80.0), floor(u_time * 0.001))));
+                    censored = max(censored, glitch * 0.4);
+                    
+                    // Apply falloff to censored areas
+                    censored *= totalFalloff;
+                    
+                    // Different colors for light and dark themes
+                    vec3 color;
+                    if (u_isDark > 0.5) {
+                        // Dark theme: subtle white/gray blobs
+                        color = vec3(0.9, 0.9, 0.95) * censored * 0.25;
+                    } else {
+                        // Light theme: subtle dark blobs
+                        color = vec3(0.1, 0.1, 0.15) * censored * 0.2;
+                    }
+                    
+                    gl_FragColor = vec4(color, censored * 0.6);
+                }
+            `;
+
+            // Compile shader
+            function compileShader(gl, type, source) {
+                const shader = gl.createShader(type);
+                gl.shaderSource(shader, source);
+                gl.compileShader(shader);
+                if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                    console.error('Shader compile error:', gl.getShaderInfoLog(shader));
+                    gl.deleteShader(shader);
+                    return null;
+                }
+                return shader;
+            }
+
+            const vertexShader = compileShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+            const fragmentShader = compileShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+
+            if (!vertexShader || !fragmentShader) return;
+
+            // Create program
+            const program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+
+            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+                console.error('Program link error:', gl.getProgramInfoLog(program));
+                return;
+            }
+
+            // Create buffer
+            const positionBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+                -1, -1,
+                 1, -1,
+                -1,  1,
+                 1,  1,
+            ]), gl.STATIC_DRAW);
+
+            // Get uniform and attribute locations
+            const positionLocation = gl.getAttribLocation(program, 'a_position');
+            const timeLocation = gl.getUniformLocation(program, 'u_time');
+            const isDarkLocation = gl.getUniformLocation(program, 'u_isDark');
+            const resolutionLocation = gl.getUniformLocation(program, 'u_resolution');
+
+            // Render function
+            function render() {
+                gl.viewport(0, 0, canvas.width, canvas.height);
+                gl.clear(gl.COLOR_BUFFER_BIT);
+
+                gl.useProgram(program);
+
+                // Set up position attribute
+                gl.enableVertexAttribArray(positionLocation);
+                gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+                gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+                // Set uniforms
+                gl.uniform1f(timeLocation, performance.now());
+                const isDark = document.body.getAttribute('data-theme') === 'dark' ? 1.0 : 0.0;
+                gl.uniform1f(isDarkLocation, isDark);
+                gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+
+                // Enable blending for transparency
+                gl.enable(gl.BLEND);
+                gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                requestAnimationFrame(render);
+            }
+
+            render();
+        }
+
+        // Language switching
+        function switchLanguage(lang) {
+            console.log('Switching to language:', lang);
+            console.log('Elements found:', document.querySelectorAll('.lang-content').length);
+
+            const contents = document.querySelectorAll('.lang-content');
+            console.log('Elements found:', contents.length);
+            
+            contents.forEach((content, index) => {
+                const classes = Array.from(content.classList);
+                const hasLang = classes.includes(lang);
+                console.log(`Element ${index}: classes=[${classes.join(', ')}], hasLanguage=${hasLang}, characters=${content.textContent.length}`);
+                
+                content.classList.remove('active');
+                if (hasLang) {
+                    content.classList.add('active');
+                    console.log(`✓ Activated element ${index}`);
+                }
+            });
+            
+            // Update document language
+            document.documentElement.lang = lang;
+            
+            // Store preference
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Theme switching
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('preferredTheme', newTheme);
+        }
+
+        // Load saved preferences
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize WebGL shader
+            initShader();
+            
+            // Load theme preference
+            const savedTheme = localStorage.getItem('preferredTheme') || 'light';
+            document.body.setAttribute('data-theme', savedTheme);
+            
+            // Load language preference
+            const savedLang = localStorage.getItem('preferredLanguage') || 'es';
+            const langSelector = document.querySelector('.lang-selector');
+            langSelector.value = savedLang;
+            switchLanguage(savedLang);
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+
+        // Add scroll spy for TOC
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('h2[id], h3[id]');
+            const tocLinks = document.querySelectorAll('.toc a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
