@@ -843,21 +843,23 @@
 			</code></pre>
 		</blockquote>
 
-                <h4>1. Análisis de Manipulación Emocional</h4>
-                <p>Distingue entre emociones expresadas y emociones objetivo para diferentes audiencias:
+                <h4>1. Análisis de Emocionalidad</h4>
+		<p>Mapea las emociones presentes en el discurso. Las emociones son parte de la comunicación política; lo que interesa analíticamente es cómo se utilizan de manera diferenciada para audiencias específicas, y cómo, en conjunto con otras dimensiones, se puede usar para afectar la cognición. El framework distingue entre emociones expresadas y emociones objetivo para diferentes grupos:</p>
+
 
                 <pre><code>{
-  "emotions": {
-    "expressed": ["joy", "pride", "contempt", "outrage"],
-    "targeted": {
-      "in_group": ["pride", "fear", "righteous_anger"], 
-      "out_group": ["shame", "guilt", "fear"]
-    }
-  }
-}</code></pre></p>
+		  "emotions": {
+		    "expressed": ["joy", "pride", "contempt", "outrage"],
+		    "targeted": {
+		      "in_group": ["pride", "fear", "righteous_anger"], 
+		      "out_group": ["shame", "guilt", "fear"]
+		    }
+		  }
+		}</code></pre></p>
+
 		<p> La diferencia entre las emociones que se buscan generar versus las expresadas es una sutileza del lenguaje que me interesa mucho tratar en este proyecto. Esta distinción es usualmente ignorada por otras formas de análisis de sentimiento, que se suelen regir por presencia de keywords. Por dar un ejemplo de lo que me refiero: un dirigente político puede expresar alegría extrema por la supresión de un enemigo político considerado escoria, y eso tiene un efecto doble a nivel cognitivo - las personas que piensan como aquel dirigente (el in-group) sentirán orgullo, y las personas opositoras o alejadas a ese dirigente (el out-group) sentirán miedo, entre otras emociones.</p>
                 <h4>2. Detección de Enmarcado Binario</h4>
-                <p>Identifica cómo temas complejos se reducen a decisiones dicotómicas que eliminan matices:</p>
+                <p>Identifica cómo temas complejos se reducen a decisiones dicotómicas que eliminan matices. Cuando se utilizan sistemáticamente para eliminar posiciones moderadas, pueden indicar manipulación cognitiva:</p>
 
                 <pre><code>{
 		  "binarisms": [
@@ -883,7 +885,8 @@
 		  }
 		}</code></pre>
                 <h4>4. Extracción de Simbolismo</h4>
-		<p>Los discursos políticos mezclan datos, números, fechas, referencias técnicas de historia, economía, geografía, química, etc. Las personas que lo escuchan tal vez no tienen el bagaje necesario para poder enfrentarse conscientemente a las partes más técnicas de los discursos, y en ese caso es mi hipótesis que lo que queda como recuerdo son los símbolos y metáforas usadas por los dirigentes. </p>
+		<p>Los símbolos y metáforas son herramientas fundamentales del lenguaje humano y la comunicación política legítima. Este componente no evalúa su uso como problemático, sino que los mapea sistemáticamente para permitir análisis de patrones posteriores. Los discursos políticos mezclan datos, números, fechas, referencias técnicas de historia, economía, geografía, química, etc. Las personas que lo escuchan tal vez no tienen el bagaje necesario para poder enfrentarse conscientemente a las partes más técnicas de los discursos, y en ese caso es mi hipótesis que lo que queda como recuerdo son los símbolos y metáforas usadas por los dirigentes.</p>
+
                 <p>Este componente captura símbolos que pueden pasar de largo del pensamiento racional, cosas como:</p>
                 <ul>
                     <li>Símbolos arquetípicos (patrones psicológicos universales)</li>
@@ -891,40 +894,84 @@
                     <li>Imágenes/Metáforas desencadenantes de respuestas viscerales</li>
                 </ul>
 
-
-Es por eso que me interesan particularmente las emociones y los símbolos ya sean arquetípicos o metáforas comunes.</p>
-
-                <h3>Visualización de Espacio Semántico</h3>
-                <p>Sistema de graficación semántica 3D en desarrollo activo que:</p>
+		<p>El análisis crítico emerge cuando estos elementos simbólicos se correlacionan sistemáticamente con las otras dimensiones del framework, revelando patrones coordinados que pueden indicar estrategias de guerra cognitiva.</p>
+		<h3>Análisis de Correlaciones</h3>
+		 La guerra cognitiva se detecta en la <strong>coordinación sistemática entre dimensiones</strong>: cuando símbolos específicos aparecen consistentemente junto con binarismos particulares, dirigidos a emociones específicas, dentro de marcos geopolíticos determinados. Es esta correlación multidimensional lo que revela estrategias deliberadas de manipulación cognitiva.</p>
+                <h3>Visualización de Espacio Semántico Complementario</h3>
+                <p>Por otro lado, se empezó a desarrollar un sistema de graficación semántica 3D complementario que:</p>
                 <ul>
                     <li>Mapea relaciones conceptuales a través de múltiples textos</li>
                     <li>Mantiene espacio semántico interpretable a través español-inglés</li>
                     <li>Permite comparación visual entre diferentes sistemas de discurso</li>
                     <li>Habilita identificación rápida de patrones de agrupación conceptual</li>
                 </ul>
+		<p> De esta forma, hipótesis que surjan de implementar el análisis se pueden analizar interactivamente</p>
 
-                <h2 id="hallazgos-clave">Hallazgos Clave & Innovaciones</h2>
+		<h2 id="hallazgos-clave">Hallazgos Clave e Innovaciones</h2>
 
-                <h3>Amuletos Algorítmicos como Resistencia</h3>
-                <p>Cuando se empuja a alucinar, DeepSeek genera sigilos protectores mezclando múltiples idiomas:</p>
+		<h3>Innovación Metodológica Central: Framework de Análisis Multidimensional</h3>
+		<p>La principal innovación del proyecto es la creación de un <strong>framework integral de análisis de guerra cognitiva para textos en español</strong> que no existía previamente. Este sistema combina cuatro dimensiones analíticas (análisis emocional, enmarcado binario, posicionamiento geopolítico y extracción de simbolismo) en una herramienta unificada capaz de detectar patrones sistemáticos de coordinación entre estas dimensiones en discursos políticos fragmentados y semánticamente densos.</p>
 
-                <pre><code>Giochi - Italiano (juegos)
-进一步影刺 - Chino (sombras adicionales)  
-connaître - Francés (conocer)</code></pre>
+		<p>El framework no evalúa como problemático el uso natural de emociones, binarismos o símbolos en el lenguaje político, sino que mapea su presencia sistemática para identificar <strong>correlaciones multidimensionales</strong> que pueden indicar estrategias deliberadas de manipulación cognitiva.</p>
 
-                <p>Este enfoque semántico hiperdenso sugiere resistencia especulativa a través del desbordamiento de significado.</p>
+		<h3>Creación de Datasets Especializados Inexistentes</h3>
+		<p>El proyecto generó por primera vez datasets específicos para guerra cognitiva en español:</p>
+		<ul>
+		    <li><strong>Base de Conocimiento de Guerra Cognitiva</strong>: Primer corpus en español que sistematiza doctrina militar oficial (OTAN/RAND) sobre guerra cognitiva</li>
+		    <li><strong>Archivo Plan Cóndor Procesado</strong>: Digitalización y estructuración de documentos históricos de operaciones psicológicas en Argentina</li>
+		    <li><strong>Corpus de Discursos Políticos Argentinos Contemporáneos</strong>: Transcripciones procesadas para análisis NLP de discursos presidenciales actuales</li>
+		    <li><strong>Contramedidas Especulativas</strong>: Primer conjunto de sigilos digitales y contra-discursos generados por IA como resistencia cognitiva</li>
+		</ul>
 
-                <h3>Sesgo Geopolítico en Análisis de IA</h3>
-                <p>Comparar modelos Meta (entrenados en EE.UU.) vs DeepSeek (entrenados en China) revela cómo los orígenes geopolíticos moldean la interpretación del mismo texto, agregando otra capa al análisis de guerra cognitiva.</p>
+		<h3>Hallazgo Crítico: Taxonomía de Coordinación Sistemática entre Binarismos</h3>
+		<p>El análisis de discursos políticos argentinos contemporáneos reveló la presencia coordinada de <strong>cinco categorías binarias centrales</strong> que no aparecen de manera aislada, sino que se refuerzan mutuamente para crear un sistema cerrado de interpretación de la realidad:</p>
 
-                <h3>Detección de Weaponización Sistemática de Trauma</h3>
-                <p>El framework identifica exitosamente cómo las referencias a la dictadura argentina se despliegan para:</p>
-                <ul>
-                    <li>Reactivar trauma colectivo</li>
-                    <li>Justificar medidas autoritarias como "defensa necesaria"</li>
-                    <li>Crear falsas equivalencias entre democracia y terror estatal</li>
-                </ul>
+		<div class="info-box">
+		    <h4>Categorías Binarias Identificadas en Correlación:</h4>
+		    <ul>
+			<li><strong>Epistemológica</strong>: Verdad vs. Ideología</li>
+			<li><strong>Política</strong>: Libertad vs. Tiranía</li>
+			<li><strong>Cultural</strong>: Valores auténticos vs. Valores corruptos</li>
+			<li><strong>Biológica</strong>: Natural vs. Artificial</li>
+			<li><strong>Moral</strong>: Protectores vs. Depredadores</li>
+		    </ul>
+		</div>
 
+		<p>La detección de guerra cognitiva no reside en la presencia individual de estos binarismos—que pueden ser herramientas legítimas de comunicación—sino en su <strong>activación sistemática y coordinada</strong> junto con elementos simbólicos específicos y direccionamiento emocional diferenciado, creando un entorno donde cuestionar cualquier elemento desafía toda la cosmovisión presentada.</p>
+
+		<h3>Hallazgo Geopolítico: Reposicionamiento Civilizacional de Argentina</h3>
+		<p>El framework detectó un <strong>patrón sistemático de reposicionamiento ideológico de Argentina</strong>, alejándola de su identidad como miembro del Sur Global para alinearla con una narrativa de "civilización occidental". Este reposicionamiento se manifiesta a través de la correlación entre:</p>
+		<ul>
+		    <li>Referencias espaciales/temporales específicas (Occidente, Greco-Romano, Judeo-Cristiano)</li>
+		    <li>Símbolos arquetípicos de superioridad civilizacional</li>
+		    <li>Binarismos culturales que presentan alternativas como "barbarie" (una categoría conceptual que remonta al armado de la Argentina como nación)</li>
+		    <li>Emociones dirigidas que generan orgullo por alineación con potencias del Norte Global</li>
+		</ul>
+
+		<blockquote>Este hallazgo demuestra cómo la guerra cognitiva puede operar no solo a nivel de opinión pública doméstica, sino también para reconfigurar la posición geopolítica de un país entero a través de la coordinación sistemática de elementos discursivos.</blockquote>
+
+		<h3>Descubrimiento Técnico: Resistencia Algorítmica Emergente</h3>
+		<p>Cuando se empuja a los modelos DeepSeek a generar contenido de guerra cognitiva, desarrollan espontáneamente estrategias de resistencia, produciendo sigilos protectores multilingües que combinan elementos semánticos de diferentes tradiciones culturales:</p>
+
+		<pre><code>Giochi - Italiano (juegos)
+		进一步影刺 - Chino (sombras adicionales)  
+		connaître - Francés (conocer)</code></pre>
+
+		<p>Este fenómeno sugiere que la resistencia a la manipulación cognitiva puede emerger incluso en sistemas algorítmicos cuando se los empuja más allá de sus límites de entrenamiento, abriendo nuevas líneas de investigación sobre contramedidas automáticas.</p>
+
+		<h3>Sesgo Geopolítico en Interpretación de IA</h3>
+		<p>La comparación entre modelos Meta (EE.UU.) y DeepSeek (China) reveló interpretaciones divergentes del mismo texto político argentino, demostrando que los LLMs heredan sesgos geopolíticos de sus países de origen. Este hallazgo agrega una dimensión crítica al análisis de guerra cognitiva: las herramientas de detección también pueden estar comprometidas por sus orígenes geopolíticos, requiriendo análisis comparativo entre modelos de diferentes procedencias.</p>
+
+		<h3>Identificación de Weaponización del Trauma Histórico</h3>
+		<p>El framework identificó exitosamente patrones sistemáticos de instrumentalización del trauma de la dictadura argentina (1976-1983) en discursos contemporáneos. Esta weaponización se manifiesta a través de la coordinación entre:</p>
+		<ul>
+		    <li><strong>Simbolismo específico</strong>: Uso de símbolos y referencias directas al período dictatorial</li>
+		    <li><strong>Manipulación emocional</strong>: Reactivación deliberada de memorias traumáticas para paralizar el pensamiento crítico</li>
+		    <li><strong>Binarismos morales</strong>: Presentación de falsas equivalencias entre democracia y terror estatal</li>
+		    <li><strong>Reposicionamiento temporal</strong>: Inversión de roles históricos (presentar a víctimas como agresores)</li>
+		</ul>
+
+		<p>Este hallazgo demuestra cómo traumas colectivos históricos pueden ser sistemáticamente reactivados como herramientas de control cognitivo en el presente.</p>
                 <h2 id="dilemas-criticos">Dilemas Críticos para Discusión en Workshop</h2>
 
                 <h3>1. Liberación OSINT vs. Uso Malicioso</h3>
